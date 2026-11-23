@@ -12,32 +12,28 @@
     h1, h2, h3, .serif { font-family: 'Cormorant Garamond', serif; }
     .mono { font-family: 'JetBrains Mono', monospace; }
 
-    /* Animación Ken Burns (zoom cinematográfico lento) */
     @keyframes kenburns {
       0% { transform: scale(1); }
       100% { transform: scale(1.08); }
     }
     .slide-active img { animation: kenburns 8s ease-out forwards; }
 
-    /* Barra de progreso del carrusel */
     @keyframes progress {
       0% { width: 0%; }
       100% { width: 100%; }
     }
     .progress-active { animation: progress 6s linear forwards; }
 
-    /* Reveal suave al hacer scroll */
     .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* Ocultar scrollbar en barra de filtros móvil */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
 <body class="antialiased selection:bg-white selection:text-black">
 
-  <!-- Navegación Minimalista (Estilo A24) -->
+  <!-- Navegación Minimalista -->
   <header class="fixed top-0 w-full z-40 mix-blend-difference px-6 md:px-12 py-6 flex items-center justify-between">
     <a href="#" class="text-xs md:text-sm tracking-[0.3em] uppercase font-medium text-white">
       Paolo Cifuentes
@@ -47,7 +43,7 @@
       <a href="#servicios" class="hover:text-white transition">Servicios</a>
       <a href="#contacto" class="hover:text-white transition">Contacto</a>
     </nav>
-    <a href="#contacto" class="mono text-[10px] tracking-[0.25em] uppercase border border-white/40 px-4 py-2 hover:bg-white hover:text-black transition">
+    <a href="https://wa.me/50200000000?text=Hola%20Paolo,%20quiero%20consultar%20disponibilidad%20para%20una%20sesi%C3%B3n." target="_blank" class="mono text-[10px] tracking-[0.25em] uppercase border border-white/40 px-4 py-2 hover:bg-white hover:text-black transition">
       Reservar
     </a>
   </header>
@@ -55,12 +51,12 @@
   <!-- HERO: Carrusel Cinematográfico Full-Screen -->
   <section class="relative h-screen w-full overflow-hidden bg-black">
     <div id="hero-slides" class="relative w-full h-full">
-      <!-- Slide 1 -->
+      <!-- Slide 1: Astrid & Marcos -->
       <div class="hero-slide slide-active absolute inset-0 transition-opacity duration-1000 opacity-100">
-        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=85" alt="Bodas" class="w-full h-full object-cover opacity-70" />
+        <img src="Astrid%26Marcosx1.jpg" alt="Propuesta Astrid y Marcos en Antigua Guatemala" class="w-full h-full object-cover opacity-75" />
         <div class="absolute inset-0 bg-gradient-to-t from-[#070707] via-black/20 to-black/40"></div>
         <div class="absolute bottom-24 left-6 md:left-12 right-6 max-w-4xl">
-          <p class="mono text-[11px] tracking-[0.3em] uppercase text-zinc-300 mb-3">01 / BODAS — ANTIGUA GUATEMALA</p>
+          <p class="mono text-[11px] tracking-[0.3em] uppercase text-zinc-300 mb-3">01 / PROPUESTA — ANTIGUA GUATEMALA</p>
           <h1 class="text-5xl md:text-8xl font-light leading-[0.95] tracking-tight">Shaping Timeless <span class="italic">Visions</span></h1>
         </div>
       </div>
@@ -109,7 +105,7 @@
       <!-- Filtros -->
       <div class="flex gap-6 overflow-x-auto no-scrollbar pb-1 mono text-[11px] tracking-[0.2em] uppercase" id="filter-buttons">
         <button data-filter="all" class="filter-btn text-white border-b border-white pb-1 whitespace-nowrap">Todos</button>
-        <button data-filter="bodas" class="filter-btn text-zinc-500 hover:text-white pb-1 whitespace-nowrap transition">Bodas</button>
+        <button data-filter="bodas" class="filter-btn text-zinc-500 hover:text-white pb-1 whitespace-nowrap transition">Bodas &amp; Propuestas</button>
         <button data-filter="xv" class="filter-btn text-zinc-500 hover:text-white pb-1 whitespace-nowrap transition">XV Años</button>
         <button data-filter="comercial" class="filter-btn text-zinc-500 hover:text-white pb-1 whitespace-nowrap transition">Comercial</button>
         <button data-filter="graduacion" class="filter-btn text-zinc-500 hover:text-white pb-1 whitespace-nowrap transition">Graduaciones</button>
@@ -120,18 +116,26 @@
     <!-- Grid Editorial Asimétrico -->
     <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10" id="portfolio-grid">
       
-      <!-- Item 1: Bodas (Grande 7 cols) -->
-      <article data-category="bodas" class="portfolio-item reveal md:col-span-7 group cursor-pointer" onclick="openLightbox(this)">
-        <div class="overflow-hidden bg-zinc-900 aspect-[16/11]">
-          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85" alt="Boda en Antigua" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
+      <!-- Item 1: Astrid & Marcos (Galería de 5 fotos) -->
+      <article
+        data-category="bodas"
+        data-gallery="Astrid%26Marcosx1.jpg,Astrid%26Marcosx2.jpg,Astrid%26Marcosx3.jpg,Astrid%26Marcosx4.jpg,Astrid%26Marcosx5.jpg"
+        class="portfolio-item reveal md:col-span-7 group cursor-pointer"
+        onclick="openLightbox(this)"
+      >
+        <div class="overflow-hidden bg-zinc-900 aspect-[16/11] relative">
+          <img src="Astrid%26Marcosx1.jpg" alt="Propuesta de Matrimonio Astrid y Marcos" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
+          <span class="absolute top-4 right-4 bg-black/60 backdrop-blur-sm mono text-[10px] tracking-[0.2em] uppercase px-3 py-1.5 text-zinc-200">
+            5 Fotos
+          </span>
         </div>
         <div class="flex justify-between items-baseline mt-4">
-          <h3 class="text-2xl font-light">Ceremonia en Antigua</h3>
-          <span class="mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">Bodas</span>
+          <h3 class="text-2xl font-light">Astrid &amp; Marcos — Antigua Guatemala</h3>
+          <span class="mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">Propuesta</span>
         </div>
       </article>
 
-      <!-- Item 2: XV Años (Vertical 5 cols) -->
+      <!-- Item 2: XV Años (Prueba) -->
       <article data-category="xv" class="portfolio-item reveal md:col-span-5 group cursor-pointer" onclick="openLightbox(this)">
         <div class="overflow-hidden bg-zinc-900 aspect-[4/5]">
           <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=900&q=85" alt="Sesión Quince Años" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
@@ -142,7 +146,7 @@
         </div>
       </article>
 
-      <!-- Item 3: Comercial (5 cols) -->
+      <!-- Item 3: Comercial (Prueba) -->
       <article data-category="comercial" class="portfolio-item reveal md:col-span-5 group cursor-pointer" onclick="openLightbox(this)">
         <div class="overflow-hidden bg-zinc-900 aspect-[4/5]">
           <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=85" alt="Campaña Producto" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
@@ -153,7 +157,7 @@
         </div>
       </article>
 
-      <!-- Item 4: Sesiones & Video (7 cols) -->
+      <!-- Item 4: Sesiones & Video (Prueba) -->
       <article data-category="sesiones" class="portfolio-item reveal md:col-span-7 group cursor-pointer" onclick="openLightbox(this)">
         <div class="overflow-hidden bg-zinc-900 aspect-[16/11]">
           <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=85" alt="Producción Audiovisual" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
@@ -164,7 +168,7 @@
         </div>
       </article>
 
-      <!-- Item 5: Graduaciones (6 cols) -->
+      <!-- Item 5: Graduaciones (Prueba) -->
       <article data-category="graduacion" class="portfolio-item reveal md:col-span-6 group cursor-pointer" onclick="openLightbox(this)">
         <div class="overflow-hidden bg-zinc-900 aspect-[4/3]">
           <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1000&q=85" alt="Graduación" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
@@ -175,13 +179,13 @@
         </div>
       </article>
 
-      <!-- Item 6: Bodas / Parejas (6 cols) -->
+      <!-- Item 6: Bodas (Prueba) -->
       <article data-category="bodas" class="portfolio-item reveal md:col-span-6 group cursor-pointer" onclick="openLightbox(this)">
         <div class="overflow-hidden bg-zinc-900 aspect-[4/3]">
-          <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1000&q=85" alt="Pedida de mano" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
+          <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1000&q=85" alt="Boda Editorial" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
         </div>
         <div class="flex justify-between items-baseline mt-4">
-          <h3 class="text-2xl font-light">Elopement &amp; Pedidas</h3>
+          <h3 class="text-2xl font-light">Bodas &amp; Elopements</h3>
           <span class="mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">Bodas</span>
         </div>
       </article>
@@ -227,8 +231,8 @@
       <p class="mono text-[11px] tracking-[0.35em] uppercase text-zinc-500 mb-6">Disponible en Guatemala &amp; Destino</p>
       <h2 class="text-5xl md:text-7xl font-light mb-10">Creemos algo <span class="italic">memorable</span></h2>
       <div class="flex flex-wrap justify-center gap-4 mb-20">
-        <a href="mailto:hola@paolocifuentes.com" class="bg-white text-black px-8 py-3.5 mono text-[11px] tracking-[0.25em] uppercase hover:bg-zinc-200 transition">
-          Cotizar por Correo
+        <a href="https://wa.me/50200000000?text=Hola%20Paolo,%20vi%20tu%20portafolio%20y%20me%20interesa%20cotizar%20una%20sesi%C3%B3n." target="_blank" class="bg-white text-black px-8 py-3.5 mono text-[11px] tracking-[0.25em] uppercase hover:bg-zinc-200 transition">
+          Cotizar por WhatsApp
         </a>
         <a href="https://instagram.com/paolocifuentes.studio" target="_blank" class="border border-zinc-700 px-8 py-3.5 mono text-[11px] tracking-[0.25em] uppercase hover:border-white transition">
           Instagram
@@ -238,16 +242,28 @@
     </div>
   </footer>
 
-  <!-- LIGHTBOX (Visor pantalla completa) -->
+  <!-- LIGHTBOX MULTIFOTO (Visor pantalla completa con flechas) -->
   <div id="lightbox" class="fixed inset-0 z-50 bg-black/95 hidden items-center justify-center p-6 backdrop-blur-sm" onclick="closeLightbox()">
     <button class="absolute top-6 right-8 mono text-xs tracking-[0.25em] uppercase text-zinc-400 hover:text-white">Cerrar [ESC]</button>
+    
+    <!-- Flechas de navegación -->
+    <button id="lb-prev" onclick="event.stopPropagation(); changeLbImage(-1)" class="hidden absolute left-4 md:left-10 mono text-xs tracking-[0.2em] uppercase text-zinc-400 hover:text-white px-4 py-3 border border-zinc-800 hover:border-white transition">
+      ← Prev
+    </button>
+    <button id="lb-next" onclick="event.stopPropagation(); changeLbImage(1)" class="hidden absolute right-4 md:right-10 mono text-xs tracking-[0.2em] uppercase text-zinc-400 hover:text-white px-4 py-3 border border-zinc-800 hover:border-white transition">
+      Next →
+    </button>
+
     <div class="max-w-5xl max-h-[85vh] flex flex-col items-center" onclick="event.stopPropagation()">
-      <img id="lightbox-img" src="" alt="" class="max-h-[78vh] w-auto object-contain" />
-      <p id="lightbox-caption" class="serif text-2xl mt-4 text-zinc-200 font-light"></p>
+      <img id="lightbox-img" src="" alt="" class="max-h-[75vh] w-auto object-contain transition-opacity duration-300" />
+      <div class="flex items-center gap-6 mt-5">
+        <p id="lightbox-caption" class="serif text-2xl text-zinc-200 font-light"></p>
+        <span id="lightbox-counter" class="mono text-[11px] tracking-[0.2em] text-zinc-500"></span>
+      </div>
     </div>
   </div>
 
-  <!-- SCRIPTS: Carrusel, Filtros, Scroll Reveal y Lightbox -->
+  <!-- SCRIPTS -->
   <script>
     // 1. Carrusel Hero
     const slides = document.querySelectorAll('.hero-slide');
@@ -293,27 +309,56 @@
       });
     });
 
-    // 3. Animación al hacer scroll (IntersectionObserver)
+    // 3. Animación al hacer scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // 4. Lightbox
+    // 4. Lightbox Multifoto
     const lb = document.getElementById('lightbox');
     const lbImg = document.getElementById('lightbox-img');
     const lbCap = document.getElementById('lightbox-caption');
+    const lbCounter = document.getElementById('lightbox-counter');
+    const lbPrev = document.getElementById('lb-prev');
+    const lbNext = document.getElementById('lb-next');
+    let lbImages = [];
+    let lbIndex = 0;
+
+    function updateLbView() {
+      lbImg.src = lbImages[lbIndex];
+      const hasMultiple = lbImages.length > 1;
+      lbPrev.classList.toggle('hidden', !hasMultiple);
+      lbNext.classList.toggle('hidden', !hasMultiple);
+      lbCounter.textContent = hasMultiple ? `${lbIndex + 1} / ${lbImages.length}` : '';
+    }
+
     function openLightbox(card) {
-      lbImg.src = card.querySelector('img').src;
+      const galleryData = card.dataset.gallery;
+      lbImages = galleryData ? galleryData.split(',').map(s => s.trim()) : [card.querySelector('img').src];
+      lbIndex = 0;
       lbCap.textContent = card.querySelector('h3').textContent;
+      updateLbView();
       lb.classList.remove('hidden');
       lb.classList.add('flex');
     }
+
+    function changeLbImage(dir) {
+      lbIndex = (lbIndex + dir + lbImages.length) % lbImages.length;
+      updateLbView();
+    }
+
     function closeLightbox() {
       lb.classList.add('hidden');
       lb.classList.remove('flex');
     }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    document.addEventListener('keydown', e => {
+      if (lb.classList.contains('hidden')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight' && lbImages.length > 1) changeLbImage(1);
+      if (e.key === 'ArrowLeft' && lbImages.length > 1) changeLbImage(-1);
+    });
   </script>
 </body>
 </html>

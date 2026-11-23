@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paolo Cifuentes Studio — Shaping Timeless Visions</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, .serif { font-family: 'Cormorant Garamond', serif; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 antialiased selection:bg-zinc-100 selection:text-zinc-950">
+
+  <!-- Navegación -->
+  <header class="fixed top-0 w-full z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-900">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" class="text-sm tracking-[0.25em] uppercase font-medium">Paolo Cifuentes</a>
+      <nav class="hidden md:flex gap-8 text-xs tracking-[0.15em] uppercase text-zinc-400">
+        <a href="#portafolio" class="hover:text-white transition">Portafolio</a>
+        <a href="#servicios" class="hover:text-white transition">Servicios</a>
+        <a href="#contacto" class="hover:text-white transition">Contacto</a>
+      </nav>
+      <a href="#contacto" class="text-xs tracking-[0.15em] uppercase border border-zinc-700 px-4 py-2 rounded-full hover:bg-white hover:text-black transition">
+        Reservar
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20 relative overflow-hidden">
+    <p class="text-xs tracking-[0.35em] uppercase text-zinc-400 mb-4">Guatemala · Fotografía &amp; Video</p>
+    <h1 class="text-5xl md:text-7xl lg:text-8xl font-normal tracking-tight leading-none mb-6">
+      Shaping Timeless <span class="italic text-zinc-400">Visions</span>
+    </h1>
+    <p class="max-w-xl text-zinc-400 text-sm md:text-base font-light leading-relaxed mb-10">
+      Narrativa visual para bodas, retratos editoriales y producciones comerciales. Capturando luz, movimiento y emoción real.
+    </p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="#portafolio" class="bg-white text-black px-7 py-3 rounded-full text-xs tracking-[0.2em] uppercase font-medium hover:bg-zinc-200 transition">
+        Ver Portafolio
+      </a>
+      <a href="#contacto" class="border border-zinc-700 text-zinc-200 px-7 py-3 rounded-full text-xs tracking-[0.2em] uppercase hover:border-white transition">
+        Cotizar Sesión
+      </a>
+    </div>
+  </section>
+
+  <!-- Galería de Prueba -->
+  <section id="portafolio" class="max-w-6xl mx-auto px-6 py-24">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+      <div>
+        <p class="text-xs tracking-[0.3em] uppercase text-zinc-500 mb-2">Trabajo Seleccionado</p>
+        <h2 class="text-4xl md:text-5xl font-normal">Portafolio</h2>
+      </div>
+      <p class="text-xs text-zinc-500 uppercase tracking-[0.2em]">Bodas · Retratos · Comercial · Aéreo</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Proyecto 1 -->
+      <article class="group relative overflow-hidden rounded-xl bg-zinc-900 aspect-[4/5]">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80" alt="Boda editorial" class="w-full h-full object-cover opacity-85 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6">
+          <span class="text-[10px] tracking-[0.25em] uppercase text-zinc-300">Bodas</span>
+          <h3 class="text-2xl mt-1">Antigua Guatemala</h3>
+        </div>
+      </article>
+
+      <!-- Proyecto 2 -->
+      <article class="group relative overflow-hidden rounded-xl bg-zinc-900 aspect-[4/5]">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80" alt="Retrato de estudio" class="w-full h-full object-cover opacity-85 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6">
+          <span class="text-[10px] tracking-[0.25em] uppercase text-zinc-300">Retrato</span>
+          <h3 class="text-2xl mt-1">Sesión Editorial</h3>
+        </div>
+      </article>
+
+      <!-- Proyecto 3 -->
+      <article class="group relative overflow-hidden rounded-xl bg-zinc-900 aspect-[4/5]">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=80" alt="Fotografía aérea y aventura" class="w-full h-full object-cover opacity-85 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6">
+          <span class="text-[10px] tracking-[0.25em] uppercase text-zinc-300">Comercial &amp; Drone</span>
+          <h3 class="text-2xl mt-1">Outdoor &amp; Montaña</h3>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Servicios -->
+  <section id="servicios" class="border-t border-zinc-900 py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <p class="text-xs tracking-[0.3em] uppercase text-zinc-500 mb-2">Qué hacemos</p>
+      <h2 class="text-4xl md:text-5xl font-normal mb-14">Servicios</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div class="border-t border-zinc-800 pt-6">
+          <span class="text-xs text-zinc-500">01</span>
+          <h3 class="text-2xl mt-2 mb-3">Bodas &amp; Eventos</h3>
+          <p class="text-sm text-zinc-400 font-light leading-relaxed">Cobertura documental y artística para bodas, pedidas de mano, graduaciones y celebraciones privadas.</p>
+        </div>
+        <div class="border-t border-zinc-800 pt-6">
+          <span class="text-xs text-zinc-500">02</span>
+          <h3 class="text-2xl mt-2 mb-3">Retratos &amp; Estudio</h3>
+          <p class="text-sm text-zinc-400 font-light leading-relaxed">Sesiones personalizadas en locación o estudio con dirección de pose, iluminación controlada y retoque editorial.</p>
+        </div>
+        <div class="border-t border-zinc-800 pt-6">
+          <span class="text-xs text-zinc-500">03</span>
+          <h3 class="text-2xl mt-2 mb-3">Comercial &amp; Aéreo</h3>
+          <p class="text-sm text-zinc-400 font-light leading-relaxed">Fotografía de producto, campañas outdoor y tomas cinematográficas con drone para marcas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <footer id="contacto" class="border-t border-zinc-900 py-24 px-6 text-center">
+    <p class="text-xs tracking-[0.3em] uppercase text-zinc-500 mb-4">¿Tienes un proyecto en mente?</p>
+    <h2 class="text-4xl md:text-6xl font-normal mb-8">Hablemos</h2>
+    <div class="flex flex-wrap justify-center gap-4 mb-16">
+      <a href="mailto:hola@paolocifuentes.com" class="bg-white text-black px-7 py-3 rounded-full text-xs tracking-[0.2em] uppercase font-medium hover:bg-zinc-200 transition">
+        Enviar Correo
+      </a>
+      <a href="https://instagram.com/paolocifuentes.studio" target="_blank" class="border border-zinc-700 px-7 py-3 rounded-full text-xs tracking-[0.2em] uppercase hover:border-white transition">
+        Instagram
+      </a>
+    </div>
+    <p class="text-xs text-zinc-600 tracking-widest uppercase">© 2026 Paolo Cifuentes Studio · Guatemala</p>
+  </footer>
+
+</body>
+</html>

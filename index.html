@@ -5,127 +5,315 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Paolo Cifuentes Studio — Shaping Timeless Visions</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Inter', sans-serif; }
+    :root { --bg: #070707; --fg: #F4F4F2; }
+    body { background-color: var(--bg); color: var(--fg); font-family: 'Inter', sans-serif; overflow-x: hidden; }
     h1, h2, h3, .serif { font-family: 'Cormorant Garamond', serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* Animación Ken Burns (zoom cinematográfico lento) */
+    @keyframes kenburns {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.08); }
+    }
+    .slide-active img { animation: kenburns 8s ease-out forwards; }
+
+    /* Barra de progreso del carrusel */
+    @keyframes progress {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+    .progress-active { animation: progress 6s linear forwards; }
+
+    /* Reveal suave al hacer scroll */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Ocultar scrollbar en barra de filtros móvil */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="bg-zinc-950 text-zinc-100 antialiased selection:bg-zinc-100 selection:text-zinc-950">
+<body class="antialiased selection:bg-white selection:text-black">
 
-  <!-- Navegación -->
-  <header class="fixed top-0 w-full z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-900">
-    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-      <a href="#" class="text-sm tracking-[0.25em] uppercase font-medium">Paolo Cifuentes</a>
-      <nav class="hidden md:flex gap-8 text-xs tracking-[0.15em] uppercase text-zinc-400">
-        <a href="#portafolio" class="hover:text-white transition">Portafolio</a>
-        <a href="#servicios" class="hover:text-white transition">Servicios</a>
-        <a href="#contacto" class="hover:text-white transition">Contacto</a>
-      </nav>
-      <a href="#contacto" class="text-xs tracking-[0.15em] uppercase border border-zinc-700 px-4 py-2 rounded-full hover:bg-white hover:text-black transition">
-        Reservar
-      </a>
-    </div>
+  <!-- Navegación Minimalista (Estilo A24) -->
+  <header class="fixed top-0 w-full z-40 mix-blend-difference px-6 md:px-12 py-6 flex items-center justify-between">
+    <a href="#" class="text-xs md:text-sm tracking-[0.3em] uppercase font-medium text-white">
+      Paolo Cifuentes
+    </a>
+    <nav class="hidden md:flex items-center gap-10 mono text-[11px] tracking-[0.2em] uppercase text-white/80">
+      <a href="#archivo" class="hover:text-white transition">Archivo</a>
+      <a href="#servicios" class="hover:text-white transition">Servicios</a>
+      <a href="#contacto" class="hover:text-white transition">Contacto</a>
+    </nav>
+    <a href="#contacto" class="mono text-[10px] tracking-[0.25em] uppercase border border-white/40 px-4 py-2 hover:bg-white hover:text-black transition">
+      Reservar
+    </a>
   </header>
 
-  <!-- Hero -->
-  <section class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20 relative overflow-hidden">
-    <p class="text-xs tracking-[0.35em] uppercase text-zinc-400 mb-4">Guatemala · Fotografía &amp; Video</p>
-    <h1 class="text-5xl md:text-7xl lg:text-8xl font-normal tracking-tight leading-none mb-6">
-      Shaping Timeless <span class="italic text-zinc-400">Visions</span>
-    </h1>
-    <p class="max-w-xl text-zinc-400 text-sm md:text-base font-light leading-relaxed mb-10">
-      Narrativa visual para bodas, retratos editoriales y producciones comerciales. Capturando luz, movimiento y emoción real.
-    </p>
-    <div class="flex flex-wrap justify-center gap-4">
-      <a href="#portafolio" class="bg-white text-black px-7 py-3 rounded-full text-xs tracking-[0.2em] uppercase font-medium hover:bg-zinc-200 transition">
-        Ver Portafolio
-      </a>
-      <a href="#contacto" class="border border-zinc-700 text-zinc-200 px-7 py-3 rounded-full text-xs tracking-[0.2em] uppercase hover:border-white transition">
-        Cotizar Sesión
-      </a>
+  <!-- HERO: Carrusel Cinematográfico Full-Screen -->
+  <section class="relative h-screen w-full overflow-hidden bg-black">
+    <div id="hero-slides" class="relative w-full h-full">
+      <!-- Slide 1 -->
+      <div class="hero-slide slide-active absolute inset-0 transition-opacity duration-1000 opacity-100">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=85" alt="Bodas" class="w-full h-full object-cover opacity-70" />
+        <div class="absolute inset-0 bg-gradient-to-t from-[#070707] via-black/20 to-black/40"></div>
+        <div class="absolute bottom-24 left-6 md:left-12 right-6 max-w-4xl">
+          <p class="mono text-[11px] tracking-[0.3em] uppercase text-zinc-300 mb-3">01 / BODAS — ANTIGUA GUATEMALA</p>
+          <h1 class="text-5xl md:text-8xl font-light leading-[0.95] tracking-tight">Shaping Timeless <span class="italic">Visions</span></h1>
+        </div>
+      </div>
+      <!-- Slide 2 -->
+      <div class="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-0 pointer-events-none">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1800&q=85" alt="Comercial Outdoor" class="w-full h-full object-cover opacity-70" />
+        <div class="absolute inset-0 bg-gradient-to-t from-[#070707] via-black/20 to-black/40"></div>
+        <div class="absolute bottom-24 left-6 md:left-12 right-6 max-w-4xl">
+          <p class="mono text-[11px] tracking-[0.3em] uppercase text-zinc-300 mb-3">02 / COMERCIAL &amp; CAMPAÑA</p>
+          <h2 class="text-5xl md:text-8xl font-light leading-[0.95] tracking-tight">Dirección Visual <span class="italic">&amp; Movimiento</span></h2>
+        </div>
+      </div>
+      <!-- Slide 3 -->
+      <div class="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-0 pointer-events-none">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1800&q=85" alt="Retrato Editorial" class="w-full h-full object-cover opacity-70" />
+        <div class="absolute inset-0 bg-gradient-to-t from-[#070707] via-black/20 to-black/40"></div>
+        <div class="absolute bottom-24 left-6 md:left-12 right-6 max-w-4xl">
+          <p class="mono text-[11px] tracking-[0.3em] uppercase text-zinc-300 mb-3">03 / RETRATO EDITORIAL &amp; SESIONES</p>
+          <h2 class="text-5xl md:text-8xl font-light leading-[0.95] tracking-tight">Luz Natural <span class="italic">y Carácter</span></h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controles del Carrusel -->
+    <div class="absolute bottom-8 left-6 md:left-12 right-6 md:right-12 flex items-center justify-between z-20">
+      <div class="flex gap-3 w-48 md:w-64" id="hero-indicators">
+        <div class="h-[2px] flex-1 bg-white/20 overflow-hidden"><div class="indicator-bar h-full bg-white progress-active"></div></div>
+        <div class="h-[2px] flex-1 bg-white/20 overflow-hidden"><div class="indicator-bar h-full bg-white w-0"></div></div>
+        <div class="h-[2px] flex-1 bg-white/20 overflow-hidden"><div class="indicator-bar h-full bg-white w-0"></div></div>
+      </div>
+      <div class="flex gap-4 mono text-[11px] tracking-[0.2em] uppercase">
+        <button onclick="prevSlide()" class="text-zinc-400 hover:text-white transition">Prev</button>
+        <span class="text-zinc-600">/</span>
+        <button onclick="nextSlide()" class="text-zinc-400 hover:text-white transition">Next</button>
+      </div>
     </div>
   </section>
 
-  <!-- Galería de Prueba -->
-  <section id="portafolio" class="max-w-6xl mx-auto px-6 py-24">
-    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+  <!-- SECCIÓN PORTAFOLIO CON FILTROS -->
+  <section id="archivo" class="max-w-7xl mx-auto px-6 md:px-12 py-28">
+    <div class="reveal flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 border-b border-zinc-900 pb-8">
       <div>
-        <p class="text-xs tracking-[0.3em] uppercase text-zinc-500 mb-2">Trabajo Seleccionado</p>
-        <h2 class="text-4xl md:text-5xl font-normal">Portafolio</h2>
+        <p class="mono text-[11px] tracking-[0.3em] uppercase text-zinc-500 mb-3">Trabajo Seleccionado 2024—2026</p>
+        <h2 class="text-4xl md:text-6xl font-light">Archivo Visual</h2>
       </div>
-      <p class="text-xs text-zinc-500 uppercase tracking-[0.2em]">Bodas · Retratos · Comercial · Aéreo</p>
+      <!-- Filtros -->
+      <div class="flex gap-6 overflow-x-auto no-scrollbar pb-1 mono text-[11px] tracking-[0.2em] uppercase" id="filter-buttons">
+        <button data-filter="all" class="filter-btn text-white border-b border-white pb-1 whitespace-nowrap">Todos</button>
+        <button data-filter="bodas" class="filter-btn text-zinc-500 hover:text-white pb-1 whitespace-nowrap transition">Bodas</button>
+        <button data-filter="xv" class="filter-btn text-zinc-500 hover:text-white pb-1 whitespace-nowrap transition">XV Años</button>
+        <button data-filter="comercial" class="filter-btn text-zinc-500 hover:text-white pb-1 whitespace-nowrap transition">Comercial</button>
+        <button data-filter="graduacion" class="filter-btn text-zinc-500 hover:text-white pb-1 whitespace-nowrap transition">Graduaciones</button>
+        <button data-filter="sesiones" class="filter-btn text-zinc-500 hover:text-white pb-1 whitespace-nowrap transition">Sesiones &amp; Video</button>
+      </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Proyecto 1 -->
-      <article class="group relative overflow-hidden rounded-xl bg-zinc-900 aspect-[4/5]">
-        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80" alt="Boda editorial" class="w-full h-full object-cover opacity-85 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6">
-          <span class="text-[10px] tracking-[0.25em] uppercase text-zinc-300">Bodas</span>
-          <h3 class="text-2xl mt-1">Antigua Guatemala</h3>
+    <!-- Grid Editorial Asimétrico -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10" id="portfolio-grid">
+      
+      <!-- Item 1: Bodas (Grande 7 cols) -->
+      <article data-category="bodas" class="portfolio-item reveal md:col-span-7 group cursor-pointer" onclick="openLightbox(this)">
+        <div class="overflow-hidden bg-zinc-900 aspect-[16/11]">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85" alt="Boda en Antigua" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
+        </div>
+        <div class="flex justify-between items-baseline mt-4">
+          <h3 class="text-2xl font-light">Ceremonia en Antigua</h3>
+          <span class="mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">Bodas</span>
         </div>
       </article>
 
-      <!-- Proyecto 2 -->
-      <article class="group relative overflow-hidden rounded-xl bg-zinc-900 aspect-[4/5]">
-        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80" alt="Retrato de estudio" class="w-full h-full object-cover opacity-85 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6">
-          <span class="text-[10px] tracking-[0.25em] uppercase text-zinc-300">Retrato</span>
-          <h3 class="text-2xl mt-1">Sesión Editorial</h3>
+      <!-- Item 2: XV Años (Vertical 5 cols) -->
+      <article data-category="xv" class="portfolio-item reveal md:col-span-5 group cursor-pointer" onclick="openLightbox(this)">
+        <div class="overflow-hidden bg-zinc-900 aspect-[4/5]">
+          <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=900&q=85" alt="Sesión Quince Años" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
+        </div>
+        <div class="flex justify-between items-baseline mt-4">
+          <h3 class="text-2xl font-light">Editorial XV Años</h3>
+          <span class="mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">XV Años</span>
         </div>
       </article>
 
-      <!-- Proyecto 3 -->
-      <article class="group relative overflow-hidden rounded-xl bg-zinc-900 aspect-[4/5]">
-        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=80" alt="Fotografía aérea y aventura" class="w-full h-full object-cover opacity-85 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6">
-          <span class="text-[10px] tracking-[0.25em] uppercase text-zinc-300">Comercial &amp; Drone</span>
-          <h3 class="text-2xl mt-1">Outdoor &amp; Montaña</h3>
+      <!-- Item 3: Comercial (5 cols) -->
+      <article data-category="comercial" class="portfolio-item reveal md:col-span-5 group cursor-pointer" onclick="openLightbox(this)">
+        <div class="overflow-hidden bg-zinc-900 aspect-[4/5]">
+          <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=85" alt="Campaña Producto" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
+        </div>
+        <div class="flex justify-between items-baseline mt-4">
+          <h3 class="text-2xl font-light">Campaña Outdoor &amp; Producto</h3>
+          <span class="mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">Comercial</span>
         </div>
       </article>
+
+      <!-- Item 4: Sesiones & Video (7 cols) -->
+      <article data-category="sesiones" class="portfolio-item reveal md:col-span-7 group cursor-pointer" onclick="openLightbox(this)">
+        <div class="overflow-hidden bg-zinc-900 aspect-[16/11]">
+          <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=85" alt="Producción Audiovisual" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
+        </div>
+        <div class="flex justify-between items-baseline mt-4">
+          <h3 class="text-2xl font-light">Retrato &amp; Dirección de Video</h3>
+          <span class="mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">Sesiones &amp; Video</span>
+        </div>
+      </article>
+
+      <!-- Item 5: Graduaciones (6 cols) -->
+      <article data-category="graduacion" class="portfolio-item reveal md:col-span-6 group cursor-pointer" onclick="openLightbox(this)">
+        <div class="overflow-hidden bg-zinc-900 aspect-[4/3]">
+          <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1000&q=85" alt="Graduación" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
+        </div>
+        <div class="flex justify-between items-baseline mt-4">
+          <h3 class="text-2xl font-light">Sesión de Graduación</h3>
+          <span class="mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">Graduaciones</span>
+        </div>
+      </article>
+
+      <!-- Item 6: Bodas / Parejas (6 cols) -->
+      <article data-category="bodas" class="portfolio-item reveal md:col-span-6 group cursor-pointer" onclick="openLightbox(this)">
+        <div class="overflow-hidden bg-zinc-900 aspect-[4/3]">
+          <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1000&q=85" alt="Pedida de mano" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
+        </div>
+        <div class="flex justify-between items-baseline mt-4">
+          <h3 class="text-2xl font-light">Elopement &amp; Pedidas</h3>
+          <span class="mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">Bodas</span>
+        </div>
+      </article>
+
     </div>
   </section>
 
-  <!-- Servicios -->
-  <section id="servicios" class="border-t border-zinc-900 py-24 px-6">
-    <div class="max-w-6xl mx-auto">
-      <p class="text-xs tracking-[0.3em] uppercase text-zinc-500 mb-2">Qué hacemos</p>
-      <h2 class="text-4xl md:text-5xl font-normal mb-14">Servicios</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-        <div class="border-t border-zinc-800 pt-6">
-          <span class="text-xs text-zinc-500">01</span>
-          <h3 class="text-2xl mt-2 mb-3">Bodas &amp; Eventos</h3>
-          <p class="text-sm text-zinc-400 font-light leading-relaxed">Cobertura documental y artística para bodas, pedidas de mano, graduaciones y celebraciones privadas.</p>
+  <!-- SERVICIOS -->
+  <section id="servicios" class="border-t border-zinc-900 py-28 px-6 md:px-12">
+    <div class="max-w-7xl mx-auto">
+      <div class="reveal mb-16">
+        <p class="mono text-[11px] tracking-[0.3em] uppercase text-zinc-500 mb-3">Especialidades</p>
+        <h2 class="text-4xl md:text-6xl font-light">Qué creamos</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div class="reveal border-t border-zinc-800 pt-6">
+          <span class="mono text-[11px] text-zinc-500">01</span>
+          <h3 class="text-2xl mt-3 mb-3 font-light">Bodas &amp; XV Años</h3>
+          <p class="text-sm text-zinc-400 font-light leading-relaxed">Cobertura documental y cinematográfica con enfoque editorial para celebrar momentos irrepetibles.</p>
         </div>
-        <div class="border-t border-zinc-800 pt-6">
-          <span class="text-xs text-zinc-500">02</span>
-          <h3 class="text-2xl mt-2 mb-3">Retratos &amp; Estudio</h3>
-          <p class="text-sm text-zinc-400 font-light leading-relaxed">Sesiones personalizadas en locación o estudio con dirección de pose, iluminación controlada y retoque editorial.</p>
+        <div class="reveal border-t border-zinc-800 pt-6">
+          <span class="mono text-[11px] text-zinc-500">02</span>
+          <h3 class="text-2xl mt-3 mb-3 font-light">Comercial &amp; Marcas</h3>
+          <p class="text-sm text-zinc-400 font-light leading-relaxed">Fotografía de producto, campañas en exteriores y producción aérea con drone para marcas.</p>
         </div>
-        <div class="border-t border-zinc-800 pt-6">
-          <span class="text-xs text-zinc-500">03</span>
-          <h3 class="text-2xl mt-2 mb-3">Comercial &amp; Aéreo</h3>
-          <p class="text-sm text-zinc-400 font-light leading-relaxed">Fotografía de producto, campañas outdoor y tomas cinematográficas con drone para marcas.</p>
+        <div class="reveal border-t border-zinc-800 pt-6">
+          <span class="mono text-[11px] text-zinc-500">03</span>
+          <h3 class="text-2xl mt-3 mb-3 font-light">Graduaciones</h3>
+          <p class="text-sm text-zinc-400 font-light leading-relaxed">Retratos individuales y familiares en locación o estudio celebrando el cierre de una etapa.</p>
+        </div>
+        <div class="reveal border-t border-zinc-800 pt-6">
+          <span class="mono text-[11px] text-zinc-500">04</span>
+          <h3 class="text-2xl mt-3 mb-3 font-light">Sesiones &amp; Video</h3>
+          <p class="text-sm text-zinc-400 font-light leading-relaxed">Sesiones personales, marca personal y piezas de video a medida para clientes individuales.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Contacto -->
-  <footer id="contacto" class="border-t border-zinc-900 py-24 px-6 text-center">
-    <p class="text-xs tracking-[0.3em] uppercase text-zinc-500 mb-4">¿Tienes un proyecto en mente?</p>
-    <h2 class="text-4xl md:text-6xl font-normal mb-8">Hablemos</h2>
-    <div class="flex flex-wrap justify-center gap-4 mb-16">
-      <a href="mailto:hola@paolocifuentes.com" class="bg-white text-black px-7 py-3 rounded-full text-xs tracking-[0.2em] uppercase font-medium hover:bg-zinc-200 transition">
-        Enviar Correo
-      </a>
-      <a href="https://instagram.com/paolocifuentes.studio" target="_blank" class="border border-zinc-700 px-7 py-3 rounded-full text-xs tracking-[0.2em] uppercase hover:border-white transition">
-        Instagram
-      </a>
+  <!-- CONTACTO -->
+  <footer id="contacto" class="border-t border-zinc-900 py-32 px-6 md:px-12 text-center">
+    <div class="reveal max-w-3xl mx-auto">
+      <p class="mono text-[11px] tracking-[0.35em] uppercase text-zinc-500 mb-6">Disponible en Guatemala &amp; Destino</p>
+      <h2 class="text-5xl md:text-7xl font-light mb-10">Creemos algo <span class="italic">memorable</span></h2>
+      <div class="flex flex-wrap justify-center gap-4 mb-20">
+        <a href="mailto:hola@paolocifuentes.com" class="bg-white text-black px-8 py-3.5 mono text-[11px] tracking-[0.25em] uppercase hover:bg-zinc-200 transition">
+          Cotizar por Correo
+        </a>
+        <a href="https://instagram.com/paolocifuentes.studio" target="_blank" class="border border-zinc-700 px-8 py-3.5 mono text-[11px] tracking-[0.25em] uppercase hover:border-white transition">
+          Instagram
+        </a>
+      </div>
+      <p class="mono text-[10px] tracking-[0.3em] uppercase text-zinc-600">© 2026 Paolo Cifuentes Studio — Shaping Timeless Visions</p>
     </div>
-    <p class="text-xs text-zinc-600 tracking-widest uppercase">© 2026 Paolo Cifuentes Studio · Guatemala</p>
   </footer>
 
+  <!-- LIGHTBOX (Visor pantalla completa) -->
+  <div id="lightbox" class="fixed inset-0 z-50 bg-black/95 hidden items-center justify-center p-6 backdrop-blur-sm" onclick="closeLightbox()">
+    <button class="absolute top-6 right-8 mono text-xs tracking-[0.25em] uppercase text-zinc-400 hover:text-white">Cerrar [ESC]</button>
+    <div class="max-w-5xl max-h-[85vh] flex flex-col items-center" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="" class="max-h-[78vh] w-auto object-contain" />
+      <p id="lightbox-caption" class="serif text-2xl mt-4 text-zinc-200 font-light"></p>
+    </div>
+  </div>
+
+  <!-- SCRIPTS: Carrusel, Filtros, Scroll Reveal y Lightbox -->
+  <script>
+    // 1. Carrusel Hero
+    const slides = document.querySelectorAll('.hero-slide');
+    const bars = document.querySelectorAll('.indicator-bar');
+    let current = 0;
+    let timer;
+
+    function showSlide(index) {
+      slides.forEach((s, i) => {
+        s.classList.toggle('opacity-100', i === index);
+        s.classList.toggle('opacity-0', i !== index);
+        s.classList.toggle('pointer-events-none', i !== index);
+        s.classList.toggle('slide-active', i === index);
+      });
+      bars.forEach((b, i) => {
+        b.classList.remove('progress-active');
+        b.style.width = i < index ? '100%' : '0%';
+        if (i === index) { void b.offsetWidth; b.classList.add('progress-active'); }
+      });
+      current = index;
+      clearInterval(timer);
+      timer = setInterval(nextSlide, 6000);
+    }
+    function nextSlide() { showSlide((current + 1) % slides.length); }
+    function prevSlide() { showSlide((current - 1 + slides.length) % slides.length); }
+    timer = setInterval(nextSlide, 6000);
+
+    // 2. Filtros de Categoría
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.portfolio-item');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('text-white', 'border-b', 'border-white'));
+        filterBtns.forEach(b => b.classList.add('text-zinc-500'));
+        btn.classList.add('text-white', 'border-b', 'border-white');
+        btn.classList.remove('text-zinc-500');
+
+        const filter = btn.dataset.filter;
+        items.forEach(item => {
+          const match = filter === 'all' || item.dataset.category === filter;
+          item.style.display = match ? 'block' : 'none';
+        });
+      });
+    });
+
+    // 3. Animación al hacer scroll (IntersectionObserver)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // 4. Lightbox
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const lbCap = document.getElementById('lightbox-caption');
+    function openLightbox(card) {
+      lbImg.src = card.querySelector('img').src;
+      lbCap.textContent = card.querySelector('h3').textContent;
+      lb.classList.remove('hidden');
+      lb.classList.add('flex');
+    }
+    function closeLightbox() {
+      lb.classList.add('hidden');
+      lb.classList.remove('flex');
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
 </body>
 </html>

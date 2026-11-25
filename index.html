@@ -1,465 +1,971 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Paolo Cifuentes Studio — Shaping Timeless Visions</title>
+  <meta name="description" content="Paolo Cifuentes Studio — Fotografía y Filmmaking en Guatemala. Historias reales, bodas destino y producción comercial." />
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
-  <style>
-    :root { --bg: #070707; --fg: #F4F4F2; }
-    body { background-color: var(--bg); color: var(--fg); font-family: 'Inter', sans-serif; overflow-x: hidden; }
-    h1, h2, h3, .serif { font-family: 'Cormorant Garamond', serif; }
-    .mono { font-family: 'JetBrains Mono', monospace; }
 
-    @keyframes kenburns {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.08); }
-    }
-    .slide-active img { animation: kenburns 8s ease-out forwards; }
+  <!-- Tipografías Editoriales 2026: Instrument Serif + Inter + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
 
-    @keyframes progress {
-      0% { width: 0%; }
-      100% { width: 100%; }
-    }
-    .progress-active { animation: progress 6s linear forwards; }
-
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  </style>
+  <!-- GSAP + ScrollTrigger + Lenis Smooth Scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 
   <!-- Vercel Web Analytics -->
   <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
-</head>
-<body class="antialiased selection:bg-white selection:text-black">
 
-  <!-- Navegación Minimalista -->
-  <header class="fixed top-0 w-full z-40 mix-blend-difference px-6 md:px-12 py-6 flex items-center justify-between">
-    <a href="#" class="text-xs md:text-sm tracking-[0.3em] uppercase font-medium text-white">
-      Paolo Cifuentes
+  <style>
+    :root {
+      --bg: #0A0A09;
+      --surface: #141412;
+      --fg: #F2EFE9;
+      --muted: #8E8A82;
+      --border: rgba(242, 239, 233, 0.12);
+      --accent: #C9B99B;
+      --btn-bg: #F2EFE9;
+      --btn-fg: #0A0A09;
+    }
+
+    /* Sistema Dual Adaptativo: Modo Papel Editorial para Bodas & Eventos */
+    body.theme-editorial {
+      --bg: #F5F2EB;
+      --surface: #EBE6DC;
+      --fg: #161614;
+      --muted: #6E6A61;
+      --border: rgba(22, 22, 20, 0.14);
+      --accent: #8C7A5B;
+      --btn-bg: #161614;
+      --btn-fg: #F5F2EB;
+    }
+
+    html { background-color: var(--bg); }
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      transition: background-color 0.85s cubic-bezier(0.16, 1, 0.3, 1), color 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .serif { font-family: 'Instrument Serif', serif; letter-spacing: -0.02em; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .theme-border { border-color: var(--border); transition: border-color 0.85s ease; }
+    .theme-muted { color: var(--muted); transition: color 0.85s ease; }
+    .theme-surface { background-color: var(--surface); transition: background-color 0.85s ease; }
+    .theme-btn {
+      background-color: var(--btn-bg);
+      color: var(--btn-fg);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .theme-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* Textura sutil 35mm */
+    .film-grain {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      pointer-events: none;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* Cursor Contextual (Solo Desktop) */
+    @media (pointer: fine) {
+      #custom-cursor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 120;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, opacity 0.3s ease;
+      }
+    }
+    @media (pointer: coarse) {
+      #custom-cursor { display: none !important; }
+    }
+
+    /* Revelado editorial de imágenes */
+    .img-frame { overflow: hidden; position: relative; }
+    .img-frame img {
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+      will-change: transform;
+    }
+    .group:hover .img-frame img { transform: scale(1.045); }
+
+    /* Máscara para tipografía cinética */
+    .line-mask { overflow: hidden; display: inline-block; vertical-align: bottom; }
+    .line-inner { display: inline-block; }
+
+    /* Transición de Universos */
+    .universe-panel { display: none; opacity: 0; }
+    .universe-panel.active { display: block; opacity: 1; animation: panelFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes panelFade {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Ocultar scrollbar en elementos horizontales */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Preloader */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background-color: #070706;
+      color: #F2EFE9;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2rem;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-[#C9B99B] selection:text-black">
+
+  <!-- Textura de Grano 35mm -->
+  <div class="film-grain"></div>
+
+  <!-- Cursor Contextual -->
+  <div id="custom-cursor" class="w-3 h-3 rounded-full bg-[#F2EFE9] mix-blend-difference flex items-center justify-center opacity-0">
+    <span id="cursor-label" class="mono text-[9px] tracking-[0.2em] uppercase text-black font-medium opacity-0 whitespace-nowrap px-3"></span>
+  </div>
+
+  <!-- PRELOADER CINEMATOGRÁFICO -->
+  <div id="preloader">
+    <div class="flex justify-between items-center mono text-[10px] tracking-[0.3em] uppercase text-zinc-500">
+      <span>Paolo Cifuentes Studio</span>
+      <span>Guatemala · Destino</span>
+    </div>
+    <div class="flex items-end justify-between">
+      <p class="serif text-4xl md:text-6xl italic font-light text-zinc-200">Shaping Timeless Visions</p>
+      <span id="preloader-count" class="mono text-3xl md:text-5xl font-light tracking-tighter">00</span>
+    </div>
+  </div>
+
+  <!-- NAVEGACIÓN SUPERIOR -->
+  <header class="fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-6 flex items-center justify-between mix-blend-difference text-white">
+    <a href="#inicio" class="flex items-center gap-3 group">
+      <span class="serif text-2xl tracking-tight leading-none">PC</span>
+      <span class="hidden sm:inline mono text-[10px] tracking-[0.3em] uppercase text-white/80 group-hover:text-white transition">Paolo Cifuentes</span>
     </a>
-    <nav class="hidden md:flex items-center gap-10 mono text-[11px] tracking-[0.2em] uppercase text-white/80">
-      <a href="#archivo" class="hover:text-white transition">Archivo</a>
-      <a href="#servicios" class="hover:text-white transition">Servicios</a>
+
+    <nav class="hidden md:flex items-center gap-9 mono text-[10px] tracking-[0.25em] uppercase text-white/75">
+      <a href="#manifiesto" class="hover:text-white transition">Visión</a>
+      <button onclick="enterUniverse('eventos', true)" class="hover:text-white transition uppercase">Historias &amp; Eventos</button>
+      <button onclick="enterUniverse('comercial', true)" class="hover:text-white transition uppercase">Comercial &amp; Film</button>
       <a href="#contacto" class="hover:text-white transition">Contacto</a>
     </nav>
+
     <a href="#contacto" class="mono text-[10px] tracking-[0.25em] uppercase border border-white/40 px-4 py-2 hover:bg-white hover:text-black transition">
       Reservar
     </a>
   </header>
 
-  <!-- HERO: Carrusel Cinematográfico Full-Screen -->
-  <section class="relative h-screen w-full overflow-hidden bg-black">
-    <div id="hero-slides" class="relative w-full h-full">
-      <!-- Slide 1: VOLTIO (Portada Principal) -->
-      <div class="hero-slide slide-active absolute inset-0 transition-opacity duration-1000 opacity-100">
-        <img src="VOLTIO/VOLTIO_HELLI-GAURA-1.jpg" alt="VOLTIO 8vo Aniversario" class="w-full h-full object-cover opacity-80" />
-        <div class="absolute inset-0 bg-gradient-to-t from-[#070707] via-black/20 to-black/40"></div>
-        <div class="absolute bottom-24 left-6 md:left-12 right-6 max-w-4xl">
-          <p class="mono text-[11px] tracking-[0.3em] uppercase text-zinc-300 mb-3">01 / COMERCIAL — VOLTIO (8VO ANIVERSARIO)</p>
-          <h1 class="text-5xl md:text-8xl font-light leading-[0.95] tracking-tight">Shaping Timeless <span class="italic">Visions</span></h1>
-        </div>
-      </div>
-      <!-- Slide 2: Astrid & Marcos -->
-      <div class="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-0 pointer-events-none">
-        <img src="Astrid%26Marcosx1.jpg" alt="Propuesta Astrid y Marcos en Antigua Guatemala" class="w-full h-full object-cover opacity-75" />
-        <div class="absolute inset-0 bg-gradient-to-t from-[#070707] via-black/20 to-black/40"></div>
-        <div class="absolute bottom-24 left-6 md:left-12 right-6 max-w-4xl">
-          <p class="mono text-[11px] tracking-[0.3em] uppercase text-zinc-300 mb-3">02 / PROPUESTA — ANTIGUA GUATEMALA</p>
-          <h2 class="text-5xl md:text-8xl font-light leading-[0.95] tracking-tight">Historias Reales <span class="italic">&amp; Emoción</span></h2>
-        </div>
-      </div>
-      <!-- Slide 3: Luis & Xime -->
-      <div class="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-0 pointer-events-none">
-        <img src="LuisAndXime/LuisAndXime1.jpg" alt="Boda Luis y Xime en Antigua Guatemala" class="w-full h-full object-cover opacity-75" />
-        <div class="absolute inset-0 bg-gradient-to-t from-[#070707] via-black/20 to-black/40"></div>
-        <div class="absolute bottom-24 left-6 md:left-12 right-6 max-w-4xl">
-          <p class="mono text-[11px] tracking-[0.3em] uppercase text-zinc-300 mb-3">03 / BODA — ANTIGUA GUATEMALA</p>
-          <h2 class="text-5xl md:text-8xl font-light leading-[0.95] tracking-tight">Luis <span class="italic">&amp; Xime</span></h2>
-        </div>
-      </div>
+  <!-- =========================================================
+       SECCIÓN 1: HERO PERSONAL (EL OJO DEL AUTOR)
+       Sube tus fotos de viajes a la carpeta VIAJES/ en GitHub:
+       VIAJES/viaje-1.jpg, VIAJES/viaje-2.jpg, VIAJES/viaje-3.jpg
+  ========================================================== -->
+  <section id="inicio" class="relative h-screen min-h-[680px] w-full overflow-hidden bg-[#0A0A09] text-[#F2EFE9]">
+    <div class="absolute inset-0">
+      <img
+        id="hero-img"
+        src="VIAJES/viaje-1.jpg"
+        onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=85';"
+        alt="Paolo Cifuentes — Mirada de Viaje"
+        class="w-full h-full object-cover opacity-70 scale-105"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A09] via-black/30 to-black/45"></div>
     </div>
 
-    <!-- Controles del Carrusel -->
-    <div class="absolute bottom-8 left-6 md:left-12 right-6 md:right-12 flex items-center justify-between z-20">
-      <div class="flex gap-3 w-48 md:w-64" id="hero-indicators">
-        <div class="h-[2px] flex-1 bg-white/20 overflow-hidden"><div class="indicator-bar h-full bg-white progress-active"></div></div>
-        <div class="h-[2px] flex-1 bg-white/20 overflow-hidden"><div class="indicator-bar h-full bg-white w-0"></div></div>
-        <div class="h-[2px] flex-1 bg-white/20 overflow-hidden"><div class="indicator-bar h-full bg-white w-0"></div></div>
+    <div class="relative z-10 h-full max-w-[1440px] mx-auto px-6 md:px-12 pb-12 pt-28 flex flex-col justify-between">
+      <div class="flex justify-between items-start mono text-[10px] tracking-[0.3em] uppercase text-zinc-300/80">
+        <span>Fotografía &amp; Filmmaking</span>
+        <span class="hidden sm:inline">14.6349° N, 90.5069° W</span>
       </div>
-      <div class="flex gap-4 mono text-[11px] tracking-[0.2em] uppercase">
-        <button onclick="prevSlide()" class="text-zinc-400 hover:text-white transition">Prev</button>
-        <span class="text-zinc-600">/</span>
-        <button onclick="nextSlide()" class="text-zinc-400 hover:text-white transition">Next</button>
+
+      <div class="max-w-5xl">
+        <p class="mono text-[10px] md:text-[11px] tracking-[0.35em] uppercase text-[#C9B99B] mb-5 hero-reveal">
+          Paolo Cifuentes Studio — Archivo &amp; Dirección
+        </p>
+        <h1 class="serif text-5xl sm:text-7xl md:text-[6.8rem] font-normal leading-[0.93] tracking-tight hero-reveal">
+          Persiguiendo luz real,<br />
+          <span class="italic text-[#E4DFD5]">sin guiones ni poses.</span>
+        </h1>
+      </div>
+
+      <div class="flex items-end justify-between border-t border-white/15 pt-6">
+        <p class="max-w-md text-xs md:text-sm text-zinc-300 font-light leading-relaxed">
+          La misma honestidad con la que documento un amanecer en la montaña es la que llevo a una boda íntima o a la campaña de una marca.
+        </p>
+        <a href="#manifiesto" class="hidden sm:flex items-center gap-3 mono text-[10px] tracking-[0.25em] uppercase text-zinc-300 hover:text-white transition">
+          <span>Descubrir</span>
+          <span class="inline-block animate-bounce">↓</span>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- SECCIÓN PORTAFOLIO CON FILTROS -->
-  <section id="archivo" class="max-w-7xl mx-auto px-6 md:px-12 py-28">
-    <div class="reveal flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 border-b border-zinc-900 pb-8">
-      <div>
-        <p class="mono text-[11px] tracking-[0.3em] uppercase text-zinc-500 mb-3">Trabajo Seleccionado 2024—2026</p>
-        <h2 class="text-4xl md:text-6xl font-light">Archivo Visual</h2>
+  <!-- =========================================================
+       SECCIÓN 2: MANIFIESTO VISUAL (QUIÉN ERES + VIAJES)
+  ========================================================== -->
+  <section id="manifiesto" class="max-w-[1440px] mx-auto px-6 md:px-12 py-28 md:py-40">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <!-- Texto del Autor -->
+      <div class="lg:col-span-5 reveal-up">
+        <p class="mono text-[10px] tracking-[0.35em] uppercase theme-muted mb-6">00 / El Autor</p>
+        <h2 class="serif text-4xl md:text-6xl leading-[1.02] mb-8">
+          Antes de disparar, <span class="italic">aprendo a mirar.</span>
+        </h2>
+        <div class="space-y-5 text-sm md:text-[15px] leading-relaxed font-light theme-muted">
+          <p>
+            Soy Paolo Cifuentes. Viajar, caminar volcanes y perderme en lugares nuevos me enseñó a esperar el segundo exacto en el que la luz y una emoción real coinciden.
+          </p>
+          <p>
+            No creo en las fotografías fabricadas. Ya sea documentando el abrazo irrepetible de una boda en Antigua o dirigiendo una producción comercial desde tierra y aire, mi objetivo es el mismo: crear imágenes que sigan sintiéndose vivas dentro de veinte años.
+          </p>
+        </div>
+
+        <div class="mt-10 pt-8 border-t theme-border grid grid-cols-2 gap-6 mono text-[10px] tracking-[0.22em] uppercase">
+          <div>
+            <span class="block theme-muted mb-1">Base</span>
+            <span>Guatemala &amp; Destino</span>
+          </div>
+          <div>
+            <span class="block theme-muted mb-1">Enfoque</span>
+            <span>Foto · Cine · Drone</span>
+          </div>
+        </div>
       </div>
-      <!-- Filtros -->
-      <div class="flex gap-6 overflow-x-auto no-scrollbar pb-1 mono text-[11px] tracking-[0.2em] uppercase" id="filter-buttons">
-        <button data-filter="all" class="filter-btn text-white border-b border-white pb-1 whitespace-nowrap">Todos</button>
-        <button data-filter="bodas" class="filter-btn text-zinc-500 hover:text-white pb-1 whitespace-nowrap transition">Bodas &amp; Propuestas</button>
-        <button data-filter="xv" class="filter-btn text-zinc-500 hover:text-white pb-1 whitespace-nowrap transition">XV Años</button>
-        <button data-filter="comercial" class="filter-btn text-zinc-500 hover:text-white pb-1 whitespace-nowrap transition">Comercial</button>
-        <button data-filter="graduacion" class="filter-btn text-zinc-500 hover:text-white pb-1 whitespace-nowrap transition">Graduaciones</button>
-        <button data-filter="sesiones" class="filter-btn text-zinc-500 hover:text-white pb-1 whitespace-nowrap transition">Sesiones &amp; Video</button>
-      </div>
-    </div>
 
-    <!-- Grid Editorial Asimétrico -->
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10" id="portfolio-grid">
-      
-      <!-- Item 1: VOLTIO 8vo Aniversario (Galería de 10 fotos) -->
-      <article
-        data-category="comercial"
-        data-gallery="VOLTIO/VOLTIO_HELLI-GAURA-1.jpg,VOLTIO/VOLTIO_HELLI-GAURA-2.jpg,VOLTIO/VOLTIO_HELLI-GAURA-3.jpg,VOLTIO/VOLTIO_HELLI-GAURA-4.jpg,VOLTIO/VOLTIO_HELLI-GAURA-5.jpg,VOLTIO/VOLTIO_HELLI-GAURA-6.jpg,VOLTIO/VOLTIO_HELLI-GAURA-7.jpg,VOLTIO/VOLTIO_HELLI-GAURA-8.jpg,VOLTIO/VOLTIO_HELLI-GAURA-9.jpg,VOLTIO/VOLTIO_HELLI-GAURA-10.jpg"
-        class="portfolio-item reveal md:col-span-7 group cursor-pointer"
-        onclick="openLightbox(this)"
-      >
-        <div class="overflow-hidden bg-zinc-900 aspect-[16/11] relative">
-          <img src="VOLTIO/VOLTIO_HELLI-GAURA-1.jpg" alt="VOLTIO 8vo Aniversario" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
-          <span class="absolute top-4 right-4 bg-black/60 backdrop-blur-sm mono text-[10px] tracking-[0.2em] uppercase px-3 py-1.5 text-zinc-200">
-            10 Fotos
-          </span>
+      <!-- Díptico Editorial de Viajes -->
+      <div class="lg:col-span-7 grid grid-cols-12 gap-5 md:gap-8 items-end">
+        <div class="col-span-7 reveal-up">
+          <div class="img-frame aspect-[4/5] theme-surface">
+            <img
+              src="VIAJES/viaje-2.jpg"
+              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1000&q=85';"
+              alt="Diario de viaje — Paolo Cifuentes"
+              loading="lazy"
+              class="w-full h-full object-cover parallax-img"
+            />
+          </div>
+          <p class="mono text-[9px] tracking-[0.25em] uppercase theme-muted mt-3">Diario Personal · 01</p>
         </div>
-        <div class="flex justify-between items-baseline mt-4">
-          <h3 class="text-2xl font-light">VOLTIO — 8vo Aniversario</h3>
-          <span class="mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">Comercial</span>
-        </div>
-      </article>
 
-      <!-- Item 2: Ariana XV Años (Galería de 9 fotos) -->
-      <article
-        data-category="xv"
-        data-gallery="Ariana-XVs/Ariana-Xvs-1.jpg,Ariana-XVs/Ariana-Xvs-2.jpg,Ariana-XVs/Ariana-Xvs-3.jpg,Ariana-XVs/Ariana-Xvs-4.jpg,Ariana-XVs/Ariana-Xvs-5.jpg,Ariana-XVs/Ariana-Xvs-6.jpg,Ariana-XVs/Ariana-Xvs-7.jpg,Ariana-XVs/Ariana-Xvs-8.jpg,Ariana-XVs/Ariana-Xvs-9.jpg"
-        class="portfolio-item reveal md:col-span-5 group cursor-pointer"
-        onclick="openLightbox(this)"
-      >
-        <div class="overflow-hidden bg-zinc-900 aspect-[4/5] relative">
-          <img src="Ariana-XVs/Ariana-Xvs-1.jpg" alt="XV Años Ariana en Hotel Barceló" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
-          <span class="absolute top-4 right-4 bg-black/60 backdrop-blur-sm mono text-[10px] tracking-[0.2em] uppercase px-3 py-1.5 text-zinc-200">
-            9 Fotos
-          </span>
-        </div>
-        <div class="flex justify-between items-baseline mt-4">
-          <h3 class="text-2xl font-light">Ariana — Hotel Barceló</h3>
-          <span class="mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">XV Años</span>
-        </div>
-      </article>
-
-      <!-- Item 3: Astrid & Marcos (Galería de 5 fotos) -->
-      <article
-        data-category="bodas"
-        data-gallery="Astrid%26Marcosx1.jpg,Astrid%26Marcosx2.jpg,Astrid%26Marcosx3.jpg,Astrid%26Marcosx4.jpg,Astrid%26Marcosx5.jpg"
-        class="portfolio-item reveal md:col-span-5 group cursor-pointer"
-        onclick="openLightbox(this)"
-      >
-        <div class="overflow-hidden bg-zinc-900 aspect-[4/5] relative">
-          <img src="Astrid%26Marcosx1.jpg" alt="Propuesta de Matrimonio Astrid y Marcos" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
-          <span class="absolute top-4 right-4 bg-black/60 backdrop-blur-sm mono text-[10px] tracking-[0.2em] uppercase px-3 py-1.5 text-zinc-200">
-            5 Fotos
-          </span>
-        </div>
-        <div class="flex justify-between items-baseline mt-4">
-          <h3 class="text-2xl font-light">Astrid &amp; Marcos — Antigua</h3>
-          <span class="mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">Propuesta</span>
-        </div>
-      </article>
-
-      <!-- Item 4: Sesiones & Video (Prueba) -->
-      <article data-category="sesiones" class="portfolio-item reveal md:col-span-7 group cursor-pointer" onclick="openLightbox(this)">
-        <div class="overflow-hidden bg-zinc-900 aspect-[16/11]">
-          <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=85" alt="Producción Audiovisual" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
-        </div>
-        <div class="flex justify-between items-baseline mt-4">
-          <h3 class="text-2xl font-light">Retrato &amp; Dirección de Video</h3>
-          <span class="mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">Sesiones &amp; Video</span>
-        </div>
-      </article>
-
-      <!-- Item 5: Graduaciones (Prueba) -->
-      <article data-category="graduacion" class="portfolio-item reveal md:col-span-6 group cursor-pointer" onclick="openLightbox(this)">
-        <div class="overflow-hidden bg-zinc-900 aspect-[4/3]">
-          <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1000&q=85" alt="Graduación" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
-        </div>
-        <div class="flex justify-between items-baseline mt-4">
-          <h3 class="text-2xl font-light">Sesión de Graduación</h3>
-          <span class="mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">Graduaciones</span>
-        </div>
-      </article>
-
-      <!-- Item 6: Luis & Xime (Galería de 12 fotos) -->
-      <article
-        data-category="bodas"
-        data-gallery="LuisAndXime/LuisAndXime1.jpg,LuisAndXime/LuisAndXime2.jpg,LuisAndXime/LuisAndXime3.jpg,LuisAndXime/LuisAndXime4.jpg,LuisAndXime/LuisAndXime5.jpg,LuisAndXime/LuisAndXime6.jpg,LuisAndXime/LuisAndXime7.jpg,LuisAndXime/LuisAndXime8.jpg,LuisAndXime/LuisAndXime9.jpg,LuisAndXime/LuisAndXime10.jpg,LuisAndXime/LuisAndXime11.jpg,LuisAndXime/LuisAndXime12.jpg"
-        class="portfolio-item reveal md:col-span-6 group cursor-pointer"
-        onclick="openLightbox(this)"
-      >
-        <div class="overflow-hidden bg-zinc-900 aspect-[4/3] relative">
-          <img src="LuisAndXime/LuisAndXime1.jpg" alt="Boda Luis y Xime en Antigua Guatemala" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
-          <span class="absolute top-4 right-4 bg-black/60 backdrop-blur-sm mono text-[10px] tracking-[0.2em] uppercase px-3 py-1.5 text-zinc-200">
-            12 Fotos
-          </span>
-        </div>
-        <div class="flex justify-between items-baseline mt-4">
-          <h3 class="text-2xl font-light">Luis &amp; Xime — Antigua Guatemala</h3>
-          <span class="mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">Boda</span>
-        </div>
-      </article>
-
-      <!-- Item 7: Alan & Natalia (Galería de 7 fotos) -->
-      <article
-        data-category="bodas"
-        data-gallery="AlanAndNatalia/AlanAndNatalia1.jpg,AlanAndNatalia/AlanAndNatalia2.jpg,AlanAndNatalia/AlanAndNatalia3.jpg,AlanAndNatalia/AlanAndNatalia4.jpg,AlanAndNatalia/AlanAndNatalia5.jpg,AlanAndNatalia/AlanAndNatalia6.jpg,AlanAndNatalia/AlanAndNatalia7.jpg"
-        class="portfolio-item reveal md:col-span-12 group cursor-pointer"
-        onclick="openLightbox(this)"
-      >
-        <div class="overflow-hidden bg-zinc-900 aspect-[16/9] relative">
-          <img src="AlanAndNatalia/AlanAndNatalia1.jpg" alt="Boda Alan y Natalia" class="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition duration-700" />
-          <span class="absolute top-4 right-4 bg-black/60 backdrop-blur-sm mono text-[10px] tracking-[0.2em] uppercase px-3 py-1.5 text-zinc-200">
-            7 Fotos
-          </span>
-        </div>
-        <div class="flex justify-between items-baseline mt-4">
-          <h3 class="text-2xl font-light">Alan &amp; Natalia</h3>
-          <span class="mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">Boda</span>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- SERVICIOS -->
-  <section id="servicios" class="border-t border-zinc-900 py-28 px-6 md:px-12">
-    <div class="max-w-7xl mx-auto">
-      <div class="reveal mb-16">
-        <p class="mono text-[11px] tracking-[0.3em] uppercase text-zinc-500 mb-3">Especialidades</p>
-        <h2 class="text-4xl md:text-6xl font-light">Qué creamos</h2>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-        <div class="reveal border-t border-zinc-800 pt-6">
-          <span class="mono text-[11px] text-zinc-500">01</span>
-          <h3 class="text-2xl mt-3 mb-3 font-light">Bodas &amp; XV Años</h3>
-          <p class="text-sm text-zinc-400 font-light leading-relaxed">Cobertura documental y cinematográfica con enfoque editorial para celebrar momentos irrepetibles.</p>
-        </div>
-        <div class="reveal border-t border-zinc-800 pt-6">
-          <span class="mono text-[11px] text-zinc-500">02</span>
-          <h3 class="text-2xl mt-3 mb-3 font-light">Comercial &amp; Marcas</h3>
-          <p class="text-sm text-zinc-400 font-light leading-relaxed">Fotografía de producto, campañas en exteriores y producción aérea con drone para marcas.</p>
-        </div>
-        <div class="reveal border-t border-zinc-800 pt-6">
-          <span class="mono text-[11px] text-zinc-500">03</span>
-          <h3 class="text-2xl mt-3 mb-3 font-light">Graduaciones</h3>
-          <p class="text-sm text-zinc-400 font-light leading-relaxed">Retratos individuales y familiares en locación o estudio celebrando el cierre de una etapa.</p>
-        </div>
-        <div class="reveal border-t border-zinc-800 pt-6">
-          <span class="mono text-[11px] text-zinc-500">04</span>
-          <h3 class="text-2xl mt-3 mb-3 font-light">Sesiones &amp; Video</h3>
-          <p class="text-sm text-zinc-400 font-light leading-relaxed">Sesiones personales, marca personal y piezas de video a medida para clientes individuales.</p>
+        <div class="col-span-5 reveal-up" style="transition-delay: 120ms;">
+          <div class="img-frame aspect-[3/4] theme-surface mb-8">
+            <img
+              src="VIAJES/viaje-3.jpg"
+              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=85';"
+              alt="Luz natural y paisaje — Paolo Cifuentes"
+              loading="lazy"
+              class="w-full h-full object-cover parallax-img"
+            />
+          </div>
+          <p class="mono text-[9px] tracking-[0.25em] uppercase theme-muted">Diario Personal · 02</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CONTACTO & FORMULARIO -->
-  <footer id="contacto" class="border-t border-zinc-900 py-28 px-6 md:px-12">
-    <div class="reveal max-w-3xl mx-auto">
-      <div class="text-center mb-14">
-        <p class="mono text-[11px] tracking-[0.35em] uppercase text-zinc-500 mb-5">Disponible en Guatemala &amp; Destino</p>
-        <h2 class="text-5xl md:text-7xl font-light mb-4">Creemos algo <span class="italic">memorable</span></h2>
-        <p class="text-sm text-zinc-400 font-light">Cuéntame sobre tu evento o proyecto y te responderé personalmente.</p>
+  <!-- =========================================================
+       SECCIÓN 3: PORTAL DE DOS UNIVERSOS (SEPARACIÓN LIMPIA)
+  ========================================================== -->
+  <section id="universos" class="border-t theme-border py-24 md:py-32 px-6 md:px-12">
+    <div class="max-w-[1440px] mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 reveal-up">
+        <div>
+          <p class="mono text-[10px] tracking-[0.35em] uppercase theme-muted mb-3">Elige una dirección</p>
+          <h2 class="serif text-4xl md:text-6xl leading-none">Dos universos, <span class="italic">una misma mirada</span></h2>
+        </div>
+        <p class="text-xs md:text-sm theme-muted max-w-sm font-light">
+          Cada proyecto vive en su propio espacio. Selecciona el área que te interesa explorar para transformar el archivo.
+        </p>
       </div>
 
-      <!-- Formulario de Cotización -->
-      <form id="contact-form" class="space-y-6 text-left">
+      <!-- Tarjetas Divididas -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <!-- Puerta 01: Historias & Eventos -->
+        <button
+          onclick="enterUniverse('eventos', true)"
+          data-cursor="ENTRAR"
+          class="group text-left relative overflow-hidden aspect-[4/3] md:aspect-[16/11] bg-zinc-900 focus:outline-none"
+        >
+          <img
+            src="LuisAndXime/LuisAndXime1.jpg"
+            alt="Bodas y Eventos — Paolo Cifuentes"
+            loading="lazy"
+            class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-95 transition duration-1000"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
+          <div class="absolute inset-0 p-7 md:p-10 flex flex-col justify-between text-[#F2EFE9]">
+            <div class="flex justify-between items-center mono text-[10px] tracking-[0.3em] uppercase text-white/75">
+              <span>01 / Universo Social</span>
+              <span class="border border-white/30 px-3 py-1 rounded-full group-hover:bg-white group-hover:text-black transition">Modo Editorial</span>
+            </div>
+            <div>
+              <h3 class="serif text-4xl md:text-6xl font-normal mb-2">Historias <span class="italic">&amp; Eventos</span></h3>
+              <p class="mono text-[10px] tracking-[0.22em] uppercase text-zinc-300">Bodas Destino · Propuestas · XV Años</p>
+            </div>
+          </div>
+        </button>
+
+        <!-- Puerta 02: Comercial & Film -->
+        <button
+          onclick="enterUniverse('comercial', true)"
+          data-cursor="ENTRAR"
+          class="group text-left relative overflow-hidden aspect-[4/3] md:aspect-[16/11] bg-zinc-900 focus:outline-none"
+        >
+          <img
+            src="VOLTIO/VOLTIO_HELLI-GAURA-1.jpg"
+            alt="Producción Comercial — Paolo Cifuentes"
+            loading="lazy"
+            class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-95 transition duration-1000"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
+          <div class="absolute inset-0 p-7 md:p-10 flex flex-col justify-between text-[#F2EFE9]">
+            <div class="flex justify-between items-center mono text-[10px] tracking-[0.3em] uppercase text-white/75">
+              <span>02 / Universo Marcas</span>
+              <span class="border border-white/30 px-3 py-1 rounded-full group-hover:bg-white group-hover:text-black transition">Modo Cine</span>
+            </div>
+            <div>
+              <h3 class="serif text-4xl md:text-6xl font-normal mb-2">Comercial <span class="italic">&amp; Film</span></h3>
+              <p class="mono text-[10px] tracking-[0.22em] uppercase text-zinc-300">Campañas · Marcas · Producción Aérea</p>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SECCIÓN 4: ARCHIVO DEDICADO (CERO MEZCLAS + TEMA ADAPTATIVO)
+  ========================================================== -->
+  <section id="archivo" class="max-w-[1440px] mx-auto px-6 md:px-12 py-20 md:py-28">
+    <!-- Selector Sticky de Universo -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-y theme-border py-5 mb-20">
+      <div class="flex items-center gap-3">
+        <span id="universe-dot" class="w-2 h-2 rounded-full bg-[#C9B99B]"></span>
+        <span id="universe-status" class="mono text-[10px] tracking-[0.3em] uppercase theme-muted">Viendo: Historias &amp; Eventos</span>
+      </div>
+
+      <div class="flex items-center gap-2 p-1 rounded-full border theme-border w-fit">
+        <button id="tab-eventos" onclick="enterUniverse('eventos', false)" class="px-5 py-2 rounded-full mono text-[10px] tracking-[0.22em] uppercase transition">
+          01. Historias &amp; Eventos
+        </button>
+        <button id="tab-comercial" onclick="enterUniverse('comercial', false)" class="px-5 py-2 rounded-full mono text-[10px] tracking-[0.22em] uppercase transition">
+          02. Comercial &amp; Film
+        </button>
+      </div>
+    </div>
+
+    <!-- =======================================================
+         PANEL A: HISTORIAS & EVENTOS (MODO PAPEL EDITORIAL)
+    ======================================================== -->
+    <div id="panel-eventos" class="universe-panel">
+      <div class="max-w-3xl mb-20">
+        <p class="mono text-[10px] tracking-[0.35em] uppercase theme-muted mb-4">Archivo Social · 2024—2026</p>
+        <h2 class="serif text-5xl md:text-7xl leading-[0.95] mb-6">
+          Bodas, propuestas &amp; <span class="italic">celebraciones con alma</span>
+        </h2>
+        <p class="text-sm md:text-base font-light theme-muted leading-relaxed">
+          Cobertura documental y cinematográfica diseñada para que revivas el ambiente exacto de tu día, sin poses forzadas ni interrupciones.
+        </p>
+      </div>
+
+      <!-- Cuadrícula Asimétrica Editorial (Solo Eventos) -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-y-20 md:gap-x-12 items-start">
+
+        <!-- Historia 1: Luis & Xime -->
+        <article onclick="openStory('luis-xime')" data-cursor="VER HISTORIA" class="md:col-span-8 group cursor-pointer">
+          <div class="img-frame aspect-[16/10] theme-surface">
+            <img src="LuisAndXime/LuisAndXime1.jpg" alt="Boda Luis y Xime en Antigua Guatemala" loading="lazy" class="w-full h-full object-cover" />
+          </div>
+          <div class="flex flex-wrap justify-between items-baseline gap-4 mt-5 pt-4 border-t theme-border">
+            <div>
+              <h3 class="serif text-3xl md:text-4xl">Luis &amp; Xime</h3>
+              <p class="mono text-[10px] tracking-[0.22em] uppercase theme-muted mt-1">Antigua Guatemala · Boda</p>
+            </div>
+            <span class="mono text-[10px] tracking-[0.25em] uppercase theme-muted">12 Fotografías →</span>
+          </div>
+        </article>
+
+        <!-- Historia 2: Astrid & Marcos -->
+        <article onclick="openStory('astrid-marcos')" data-cursor="VER HISTORIA" class="md:col-span-4 md:mt-24 group cursor-pointer">
+          <div class="img-frame aspect-[4/5] theme-surface">
+            <img src="Astrid%26Marcosx1.jpg" alt="Propuesta Astrid y Marcos en Antigua Guatemala" loading="lazy" class="w-full h-full object-cover" />
+          </div>
+          <div class="flex justify-between items-baseline gap-4 mt-5 pt-4 border-t theme-border">
+            <div>
+              <h3 class="serif text-3xl">Astrid &amp; Marcos</h3>
+              <p class="mono text-[10px] tracking-[0.22em] uppercase theme-muted mt-1">Antigua · Propuesta</p>
+            </div>
+            <span class="mono text-[10px] tracking-[0.25em] uppercase theme-muted">05 →</span>
+          </div>
+        </article>
+
+        <!-- Historia 3: Ariana XV Años -->
+        <article onclick="openStory('ariana-xv')" data-cursor="VER HISTORIA" class="md:col-span-5 group cursor-pointer">
+          <div class="img-frame aspect-[4/5] theme-surface">
+            <img src="Ariana-XVs/Ariana-Xvs-1.jpg" alt="XV Años Ariana en Hotel Barceló" loading="lazy" class="w-full h-full object-cover" />
+          </div>
+          <div class="flex justify-between items-baseline gap-4 mt-5 pt-4 border-t theme-border">
+            <div>
+              <h3 class="serif text-3xl md:text-4xl">Ariana</h3>
+              <p class="mono text-[10px] tracking-[0.22em] uppercase theme-muted mt-1">Hotel Barceló · XV Años</p>
+            </div>
+            <span class="mono text-[10px] tracking-[0.25em] uppercase theme-muted">09 Fotos →</span>
+          </div>
+        </article>
+
+        <!-- Historia 4: Alan & Natalia -->
+        <article onclick="openStory('alan-natalia')" data-cursor="VER HISTORIA" class="md:col-span-7 md:mt-16 group cursor-pointer">
+          <div class="img-frame aspect-[16/11] theme-surface">
+            <img src="AlanAndNatalia/AlanAndNatalia1.jpg" alt="Boda Alan y Natalia" loading="lazy" class="w-full h-full object-cover" />
+          </div>
+          <div class="flex justify-between items-baseline gap-4 mt-5 pt-4 border-t theme-border">
+            <div>
+              <h3 class="serif text-3xl md:text-4xl">Alan &amp; Natalia</h3>
+              <p class="mono text-[10px] tracking-[0.22em] uppercase theme-muted mt-1">Guatemala · Boda</p>
+            </div>
+            <span class="mono text-[10px] tracking-[0.25em] uppercase theme-muted">07 Fotos →</span>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Índice Interactivo de Historias con Hover Preview -->
+      <div class="mt-32 pt-16 border-t theme-border relative">
+        <p class="mono text-[10px] tracking-[0.35em] uppercase theme-muted mb-8">Índice Rápido — Historias</p>
+        <div class="divide-y theme-border" id="hover-index">
+          <button onclick="openStory('luis-xime')" data-preview="LuisAndXime/LuisAndXime1.jpg" class="index-row w-full py-6 flex items-center justify-between text-left group">
+            <span class="serif text-3xl md:text-5xl group-hover:translate-x-3 transition duration-500">Luis &amp; Xime</span>
+            <span class="mono text-[10px] tracking-[0.25em] uppercase theme-muted">Boda · Antigua Guatemala</span>
+          </button>
+          <button onclick="openStory('astrid-marcos')" data-preview="Astrid%26Marcosx1.jpg" class="index-row w-full py-6 flex items-center justify-between text-left group">
+            <span class="serif text-3xl md:text-5xl group-hover:translate-x-3 transition duration-500">Astrid &amp; Marcos</span>
+            <span class="mono text-[10px] tracking-[0.25em] uppercase theme-muted">Propuesta · Antigua Guatemala</span>
+          </button>
+          <button onclick="openStory('ariana-xv')" data-preview="Ariana-XVs/Ariana-Xvs-1.jpg" class="index-row w-full py-6 flex items-center justify-between text-left group">
+            <span class="serif text-3xl md:text-5xl group-hover:translate-x-3 transition duration-500">Ariana</span>
+            <span class="mono text-[10px] tracking-[0.25em] uppercase theme-muted">XV Años · Hotel Barceló</span>
+          </button>
+          <button onclick="openStory('alan-natalia')" data-preview="AlanAndNatalia/AlanAndNatalia1.jpg" class="index-row w-full py-6 flex items-center justify-between text-left group">
+            <span class="serif text-3xl md:text-5xl group-hover:translate-x-3 transition duration-500">Alan &amp; Natalia</span>
+            <span class="mono text-[10px] tracking-[0.25em] uppercase theme-muted">Boda · Guatemala</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =======================================================
+         PANEL B: COMERCIAL & FILM (MODO CINE OSCURO)
+    ======================================================== -->
+    <div id="panel-comercial" class="universe-panel">
+      <div class="max-w-3xl mb-20">
+        <p class="mono text-[10px] tracking-[0.35em] uppercase theme-muted mb-4">Producción Comercial &amp; Audiovisual</p>
+        <h2 class="serif text-5xl md:text-7xl leading-[0.95] mb-6">
+          Visuales con carácter para <span class="italic">marcas en movimiento</span>
+        </h2>
+        <p class="text-sm md:text-base font-light theme-muted leading-relaxed">
+          Dirección de fotografía, campañas en exteriores, cobertura de eventos corporativos de alto impacto y cinematografía aérea con drone.
+        </p>
+      </div>
+
+      <!-- Caso de Estudio Insignia Full-Bleed: VOLTIO -->
+      <article onclick="openStory('voltio')" data-cursor="VER CAMPAÑA" class="group cursor-pointer mb-24">
+        <div class="img-frame aspect-[16/10] md:aspect-[21/10] theme-surface">
+          <img src="VOLTIO/VOLTIO_HELLI-GAURA-1.jpg" alt="VOLTIO 8vo Aniversario" loading="lazy" class="w-full h-full object-cover" />
+          <div class="absolute top-6 right-6 bg-black/65 backdrop-blur-md mono text-[10px] tracking-[0.25em] uppercase px-4 py-2 text-[#F2EFE9]">
+            Caso de Estudio · 10 Fotos
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mt-7 pt-6 border-t theme-border items-baseline">
+          <div class="md:col-span-6">
+            <h3 class="serif text-4xl md:text-5xl">VOLTIO — 8vo Aniversario</h3>
+          </div>
+          <div class="md:col-span-4">
+            <p class="text-sm font-light theme-muted">Cobertura comercial, fotografía de acción y tomas aéreas en locación icónica.</p>
+          </div>
+          <div class="md:col-span-2 md:text-right">
+            <span class="mono text-[10px] tracking-[0.25em] uppercase text-[#C9B99B]">Explorar →</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Capacidades Comerciales (Arquitectura de Estudio) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-16 border-t theme-border">
+        <div class="p-8 theme-surface border theme-border">
+          <span class="mono text-[10px] tracking-[0.3em] uppercase text-[#C9B99B]">01 / Campañas</span>
+          <h4 class="serif text-3xl mt-4 mb-3">Fotografía de Marca</h4>
+          <p class="text-sm font-light theme-muted leading-relaxed">Producción en exteriores, lifestyle deportivo, producto y contenido editorial listo para pauta y web.</p>
+        </div>
+        <div class="p-8 theme-surface border theme-border">
+          <span class="mono text-[10px] tracking-[0.3em] uppercase text-[#C9B99B]">02 / Cine</span>
+          <h4 class="serif text-3xl mt-4 mb-3">Dirección &amp; Color</h4>
+          <p class="text-sm font-light theme-muted leading-relaxed">Piezas de video comercial con narrativa cinematográfica, sonido limpio y etalonaje profesional.</p>
+        </div>
+        <div class="p-8 theme-surface border theme-border">
+          <span class="mono text-[10px] tracking-[0.3em] uppercase text-[#C9B99B]">03 / Aéreo</span>
+          <h4 class="serif text-3xl mt-4 mb-3">Producción con Drone</h4>
+          <p class="text-sm font-light theme-muted leading-relaxed">Perspectivas aéreas en alta definición para eventos masivos, arquitectura, turismo y campañas outdoor.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Imagen Flotante para el Índice Interactivo (Desktop) -->
+  <div id="floating-preview" class="fixed z-40 pointer-events-none w-56 h-72 overflow-hidden opacity-0 scale-95 transition-all duration-300 hidden md:block shadow-2xl">
+    <img id="floating-preview-img" src="" alt="" class="w-full h-full object-cover" />
+  </div>
+
+  <!-- =========================================================
+       SECCIÓN 5: CONTACTO & FORMULARIO (FormSubmit -> Gmail)
+  ========================================================== -->
+  <footer id="contacto" class="border-t theme-border py-28 md:py-36 px-6 md:px-12">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-16 reveal-up">
+        <p class="mono text-[10px] tracking-[0.35em] uppercase theme-muted mb-5">Disponibilidad 2026 — 2027</p>
+        <h2 class="serif text-5xl md:text-7xl leading-[0.95] mb-5">
+          Hablemos de tu <span class="italic">próxima historia</span>
+        </h2>
+        <p class="text-sm font-light theme-muted max-w-md mx-auto">
+          Cuéntame qué tienes en mente. Leo y respondo personalmente cada solicitud.
+        </p>
+      </div>
+
+      <form id="contact-form" class="space-y-8 reveal-up">
         <input type="hidden" name="_subject" value="Nueva consulta desde paolocifuentes.com" />
         <input type="hidden" name="_template" value="table" />
         <input type="text" name="_honey" style="display:none" />
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <label for="nombre" class="block mono text-[10px] tracking-[0.25em] uppercase text-zinc-500 mb-2">Nombre completo *</label>
-            <input type="text" id="nombre" name="Nombre" required placeholder="Tu nombre" class="w-full bg-transparent border-b border-zinc-800 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white transition" />
+            <label for="nombre" class="block mono text-[10px] tracking-[0.25em] uppercase theme-muted mb-2">Nombre *</label>
+            <input type="text" id="nombre" name="Nombre" required placeholder="Tu nombre completo"
+              class="w-full bg-transparent border-b theme-border py-3 text-sm focus:outline-none focus:border-current transition" />
           </div>
           <div>
-            <label for="contacto-cliente" class="block mono text-[10px] tracking-[0.25em] uppercase text-zinc-500 mb-2">Correo o WhatsApp *</label>
-            <input type="text" id="contacto-cliente" name="Correo_o_WhatsApp" required placeholder="tu@correo.com / +502..." class="w-full bg-transparent border-b border-zinc-800 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white transition" />
+            <label for="contacto-cliente" class="block mono text-[10px] tracking-[0.25em] uppercase theme-muted mb-2">Correo o WhatsApp *</label>
+            <input type="text" id="contacto-cliente" name="Correo_o_WhatsApp" required placeholder="tu@correo.com / +502..."
+              class="w-full bg-transparent border-b theme-border py-3 text-sm focus:outline-none focus:border-current transition" />
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <label for="servicio" class="block mono text-[10px] tracking-[0.25em] uppercase text-zinc-500 mb-2">Tipo de proyecto *</label>
-            <select id="servicio" name="Proyecto" required class="w-full bg-[#070707] border-b border-zinc-800 py-3 text-sm text-white focus:outline-none focus:border-white transition">
-              <option value="Boda / Propuesta">Boda / Propuesta</option>
-              <option value="XV Años">XV Años</option>
-              <option value="Comercial / Marca">Comercial / Marca</option>
-              <option value="Graduación">Graduación</option>
-              <option value="Sesión Personal / Video">Sesión Personal / Video</option>
+            <label for="servicio" class="block mono text-[10px] tracking-[0.25em] uppercase theme-muted mb-2">Tipo de proyecto *</label>
+            <select id="servicio" name="Proyecto" required
+              class="w-full bg-transparent border-b theme-border py-3 text-sm focus:outline-none focus:border-current transition">
+              <option class="text-black" value="Boda / Propuesta">Boda / Propuesta</option>
+              <option class="text-black" value="XV Años">XV Años</option>
+              <option class="text-black" value="Comercial / Marca">Comercial / Marca</option>
+              <option class="text-black" value="Video / Drone">Video / Producción Aérea</option>
+              <option class="text-black" value="Sesión Personal / Graduación">Sesión Personal / Graduación</option>
             </select>
           </div>
           <div>
-            <label for="fecha" class="block mono text-[10px] tracking-[0.25em] uppercase text-zinc-500 mb-2">Fecha estimada (opcional)</label>
-            <input type="text" id="fecha" name="Fecha_Estimada" placeholder="Ej. Noviembre 2026" class="w-full bg-transparent border-b border-zinc-800 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white transition" />
+            <label for="fecha" class="block mono text-[10px] tracking-[0.25em] uppercase theme-muted mb-2">Fecha y locación</label>
+            <input type="text" id="fecha" name="Fecha_y_Locacion" placeholder="Ej. Diciembre 2026 · Antigua"
+              class="w-full bg-transparent border-b theme-border py-3 text-sm focus:outline-none focus:border-current transition" />
           </div>
         </div>
 
         <div>
-          <label for="mensaje" class="block mono text-[10px] tracking-[0.25em] uppercase text-zinc-500 mb-2">Cuéntame tu idea *</label>
-          <textarea id="mensaje" name="Mensaje" rows="4" required placeholder="Locación, horario aproximado o detalles clave..." class="w-full bg-transparent border-b border-zinc-800 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white transition resize-none"></textarea>
+          <label for="mensaje" class="block mono text-[10px] tracking-[0.25em] uppercase theme-muted mb-2">Detalles del proyecto *</label>
+          <textarea id="mensaje" name="Mensaje" rows="4" required placeholder="Cuéntame un poco sobre la idea, horario o lo que más te ilusiona capturar..."
+            class="w-full bg-transparent border-b theme-border py-3 text-sm focus:outline-none focus:border-current transition resize-none"></textarea>
         </div>
 
         <div class="pt-4 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <button type="submit" id="submit-btn" class="w-full sm:w-auto bg-white text-black px-10 py-4 mono text-[11px] tracking-[0.25em] uppercase hover:bg-zinc-200 transition">
+          <button type="submit" id="submit-btn" class="w-full sm:w-auto theme-btn px-12 py-4 mono text-[10px] tracking-[0.3em] uppercase">
             Enviar Solicitud
           </button>
-          <p id="form-status" class="mono text-[11px] tracking-[0.15em] text-zinc-400 hidden"></p>
+          <p id="form-status" class="mono text-[11px] tracking-[0.15em] hidden"></p>
         </div>
       </form>
 
-      <!-- Enlaces Directos -->
-      <div class="mt-20 pt-10 border-t border-zinc-900 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div class="flex flex-wrap justify-center gap-6 mono text-[10px] tracking-[0.25em] uppercase text-zinc-400">
-          <a href="mailto:paolocifuentesphoto@gmail.com" class="hover:text-white transition">paolocifuentesphoto@gmail.com</a>
-          <span class="text-zinc-700">/</span>
-          <a href="https://instagram.com/paolocifuentes.studio" target="_blank" class="hover:text-white transition">Instagram</a>
+      <!-- Footer Links -->
+      <div class="mt-24 pt-10 border-t theme-border flex flex-col sm:flex-row items-center justify-between gap-4 mono text-[10px] tracking-[0.25em] uppercase theme-muted">
+        <div class="flex flex-wrap justify-center gap-6">
+          <a href="mailto:paolocifuentesphoto@gmail.com" class="hover:opacity-100 transition">paolocifuentesphoto@gmail.com</a>
+          <span>/</span>
+          <a href="https://instagram.com/paolocifuentes.studio" target="_blank" class="hover:opacity-100 transition">Instagram</a>
         </div>
-        <p class="mono text-[10px] tracking-[0.25em] uppercase text-zinc-600">© 2026 Paolo Cifuentes Studio</p>
+        <span>© 2026 Paolo Cifuentes Studio</span>
       </div>
     </div>
   </footer>
 
-  <!-- LIGHTBOX MULTIFOTO -->
-  <div id="lightbox" class="fixed inset-0 z-50 bg-black/95 hidden items-center justify-center p-6 backdrop-blur-sm" onclick="closeLightbox()">
-    <button class="absolute top-6 right-8 mono text-xs tracking-[0.25em] uppercase text-zinc-400 hover:text-white">Cerrar [ESC]</button>
-    
-    <button id="lb-prev" onclick="event.stopPropagation(); changeLbImage(-1)" class="hidden absolute left-4 md:left-10 mono text-xs tracking-[0.2em] uppercase text-zinc-400 hover:text-white px-4 py-3 border border-zinc-800 hover:border-white transition">
-      ← Prev
-    </button>
-    <button id="lb-next" onclick="event.stopPropagation(); changeLbImage(1)" class="hidden absolute right-4 md:right-10 mono text-xs tracking-[0.2em] uppercase text-zinc-400 hover:text-white px-4 py-3 border border-zinc-800 hover:border-white transition">
-      Next →
-    </button>
+  <!-- =========================================================
+       VISOR EDITORIAL DE HISTORIA (ESTILO REVISTA / CASE STUDY)
+  ========================================================== -->
+  <div id="story-modal" class="fixed inset-0 z-[100] hidden overflow-y-auto bg-[#0A0A09] text-[#F2EFE9] transition-colors duration-500">
+    <!-- Barra fija del Visor -->
+    <div class="sticky top-0 z-20 px-6 md:px-12 py-5 flex items-center justify-between backdrop-blur-md bg-inherit/85 border-b border-current/10">
+      <div class="flex items-center gap-4">
+        <span id="story-meta" class="mono text-[10px] tracking-[0.25em] uppercase opacity-65"></span>
+      </div>
+      <button onclick="closeStory()" class="mono text-[10px] tracking-[0.28em] uppercase border border-current/30 px-4 py-2 hover:opacity-70 transition">
+        Cerrar [ESC]
+      </button>
+    </div>
 
-    <div class="max-w-5xl max-h-[85vh] flex flex-col items-center" onclick="event.stopPropagation()">
-      <img id="lightbox-img" src="" alt="" class="max-h-[75vh] w-auto object-contain transition-opacity duration-300" />
-      <div class="flex items-center gap-6 mt-5">
-        <p id="lightbox-caption" class="serif text-2xl text-zinc-200 font-light"></p>
-        <span id="lightbox-counter" class="mono text-[11px] tracking-[0.2em] text-zinc-500"></span>
+    <!-- Contenido Editorial de la Historia -->
+    <div class="max-w-6xl mx-auto px-6 md:px-12 py-16 md:py-24">
+      <div class="max-w-3xl mb-16">
+        <h2 id="story-title" class="serif text-5xl md:text-7xl leading-[0.95] mb-5"></h2>
+        <p id="story-desc" class="text-sm md:text-base font-light opacity-75 leading-relaxed"></p>
+      </div>
+
+      <!-- Secuencia Editorial de Fotos -->
+      <div id="story-gallery" class="space-y-8 md:space-y-12"></div>
+
+      <!-- Pie de Historia: Siguiente Proyecto -->
+      <div class="mt-24 pt-12 border-t border-current/15 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <button onclick="closeStory()" class="mono text-[10px] tracking-[0.25em] uppercase opacity-65 hover:opacity-100 transition">
+          ← Volver al Archivo
+        </button>
+        <button id="next-story-btn" class="serif text-3xl md:text-4xl italic hover:opacity-75 transition">
+          Siguiente historia →
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- SCRIPTS -->
+  <!-- ZOOM PANTALLA COMPLETA AL HACER CLIC EN UNA FOTO DE LA HISTORIA -->
+  <div id="zoom-overlay" onclick="closeZoom()" class="fixed inset-0 z-[150] hidden bg-black/95 items-center justify-center p-6 backdrop-blur-sm cursor-zoom-out">
+    <img id="zoom-img" src="" alt="" class="max-h-[90vh] max-w-[92vw] object-contain" />
+  </div>
+
+  <!-- =========================================================
+       SCRIPTS: LENIS + GSAP + SISTEMA DUAL + HISTORIAS + FORM
+  ========================================================== -->
   <script>
-    // 1. Carrusel Hero
-    const slides = document.querySelectorAll('.hero-slide');
-    const bars = document.querySelectorAll('.indicator-bar');
-    let current = 0;
-    let timer;
+    // ---------------------------------------------------------
+    // 1. BASE DE DATOS DE PROYECTOS (TUS FOTOS REALES)
+    // ---------------------------------------------------------
+    const STORIES = {
+      'luis-xime': {
+        title: 'Luis & Xime',
+        meta: 'Boda · Antigua Guatemala · 12 Fotografías',
+        desc: 'Una celebración íntima entre arquitectura colonial, luz cálida de tarde y momentos genuinos documentados sin interrupciones.',
+        theme: 'editorial',
+        next: 'astrid-marcos',
+        images: Array.from({ length: 12 }, (_, i) => `LuisAndXime/LuisAndXime${i + 1}.jpg`)
+      },
+      'astrid-marcos': {
+        title: 'Astrid & Marcos',
+        meta: 'Propuesta de Matrimonio · Antigua Guatemala · 05 Fotografías',
+        desc: 'El instante exacto de una sorpresa inolvidable, capturado con discreción y luz natural en las calles de Antigua.',
+        theme: 'editorial',
+        next: 'ariana-xv',
+        images: Array.from({ length: 5 }, (_, i) => `Astrid%26Marcosx${i + 1}.jpg`)
+      },
+      'ariana-xv': {
+        title: 'Ariana — XV Años',
+        meta: 'XV Años · Hotel Barceló · 09 Fotografías',
+        desc: 'Retrato editorial y cobertura nocturna celebrando el inicio de una nueva etapa con elegancia y energía.',
+        theme: 'editorial',
+        next: 'alan-natalia',
+        images: Array.from({ length: 9 }, (_, i) => `Ariana-XVs/Ariana-Xvs-${i + 1}.jpg`)
+      },
+      'alan-natalia': {
+        title: 'Alan & Natalia',
+        meta: 'Boda · Guatemala · 07 Fotografías',
+        desc: 'Emoción cruda, miradas cómplices y atmósfera atemporal en una historia diseñada para perdurar.',
+        theme: 'editorial',
+        next: 'luis-xime',
+        images: Array.from({ length: 7 }, (_, i) => `AlanAndNatalia/AlanAndNatalia${i + 1}.jpg`)
+      },
+      'voltio': {
+        title: 'VOLTIO — 8vo Aniversario',
+        meta: 'Producción Comercial & Drone · 10 Fotografías',
+        desc: 'Campaña visual de alto impacto para el octavo aniversario de VOLTIO, combinando acción, narrativa de marca y perspectivas aéreas.',
+        theme: 'dark',
+        next: 'luis-xime',
+        images: Array.from({ length: 10 }, (_, i) => `VOLTIO/VOLTIO_HELLI-GAURA-${i + 1}.jpg`)
+      }
+    };
 
-    function showSlide(index) {
-      slides.forEach((s, i) => {
-        s.classList.toggle('opacity-100', i === index);
-        s.classList.toggle('opacity-0', i !== index);
-        s.classList.toggle('pointer-events-none', i !== index);
-        s.classList.toggle('slide-active', i === index);
-      });
-      bars.forEach((b, i) => {
-        b.classList.remove('progress-active');
-        b.style.width = i < index ? '100%' : '0%';
-        if (i === index) { void b.offsetWidth; b.classList.add('progress-active'); }
-      });
-      current = index;
-      clearInterval(timer);
-      timer = setInterval(nextSlide, 6000);
+    // ---------------------------------------------------------
+    // 2. LENIS SMOOTH SCROLL (CON FALLBACK SEGURO)
+    // ---------------------------------------------------------
+    let lenis = null;
+    if (typeof Lenis !== 'undefined') {
+      lenis = new Lenis({ duration: 1.15, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
     }
-    function nextSlide() { showSlide((current + 1) % slides.length); }
-    function prevSlide() { showSlide((current - 1 + slides.length) % slides.length); }
-    timer = setInterval(nextSlide, 6000);
 
-    // 2. Filtros de Categoría
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const items = document.querySelectorAll('.portfolio-item');
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('text-white', 'border-b', 'border-white'));
-        filterBtns.forEach(b => b.classList.add('text-zinc-500'));
-        btn.classList.add('text-white', 'border-b', 'border-white');
-        btn.classList.remove('text-zinc-500');
+    // ---------------------------------------------------------
+    // 3. PRELOADER CINEMATOGRÁFICO
+    // ---------------------------------------------------------
+    const preloader = document.getElementById('preloader');
+    const counterEl = document.getElementById('preloader-count');
+    let count = 0;
+    const preloaderTimer = setInterval(() => {
+      count += Math.floor(Math.random() * 18) + 12;
+      if (count >= 100) {
+        count = 100;
+        counterEl.textContent = '100';
+        clearInterval(preloaderTimer);
+        if (typeof gsap !== 'undefined') {
+          gsap.to(preloader, {
+            yPercent: -100,
+            duration: 0.9,
+            ease: 'power4.inOut',
+            delay: 0.15,
+            onComplete: () => { preloader.style.display = 'none'; initHeroAnimations(); }
+          });
+        } else {
+          preloader.style.display = 'none';
+        }
+      } else {
+        counterEl.textContent = String(count).padStart(2, '0');
+      }
+    }, 65);
 
-        const filter = btn.dataset.filter;
-        items.forEach(item => {
-          const match = filter === 'all' || item.dataset.category === filter;
-          item.style.display = match ? 'block' : 'none';
+    function initHeroAnimations() {
+      if (typeof gsap === 'undefined') return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.from('.hero-reveal', { y: 40, opacity: 0, duration: 1.1, stagger: 0.14, ease: 'power3.out' });
+      gsap.to('#hero-img', {
+        yPercent: 14,
+        ease: 'none',
+        scrollTrigger: { trigger: '#inicio', start: 'top top', end: 'bottom top', scrub: true }
+      });
+
+      document.querySelectorAll('.reveal-up').forEach(el => {
+        gsap.from(el, {
+          y: 36,
+          opacity: 0,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 86%', once: true }
         });
       });
+    }
+
+    // ---------------------------------------------------------
+    // 4. SISTEMA DUAL ADAPTATIVO (EVENTOS vs COMERCIAL)
+    // ---------------------------------------------------------
+    let currentUniverse = 'eventos';
+
+    function enterUniverse(universe, shouldScroll) {
+      currentUniverse = universe;
+      const isEditorial = universe === 'eventos';
+
+      // Cambiar paleta global del sitio
+      document.body.classList.toggle('theme-editorial', isEditorial);
+
+      // Mostrar solo el panel seleccionado (Cero mezclas)
+      document.getElementById('panel-eventos').classList.toggle('active', isEditorial);
+      document.getElementById('panel-comercial').classList.toggle('active', !isEditorial);
+
+      // Actualizar estado de los botones
+      const tabEventos = document.getElementById('tab-eventos');
+      const tabComercial = document.getElementById('tab-comercial');
+      const statusText = document.getElementById('universe-status');
+
+      if (isEditorial) {
+        tabEventos.className = 'px-5 py-2 rounded-full mono text-[10px] tracking-[0.22em] uppercase transition bg-[#161614] text-[#F5F2EB]';
+        tabComercial.className = 'px-5 py-2 rounded-full mono text-[10px] tracking-[0.22em] uppercase transition opacity-60 hover:opacity-100';
+        statusText.textContent = 'Viendo: Historias & Eventos';
+        history.replaceState(null, '', '#eventos');
+      } else {
+        tabComercial.className = 'px-5 py-2 rounded-full mono text-[10px] tracking-[0.22em] uppercase transition bg-[#F2EFE9] text-[#0A0A09]';
+        tabEventos.className = 'px-5 py-2 rounded-full mono text-[10px] tracking-[0.22em] uppercase transition opacity-60 hover:opacity-100';
+        statusText.textContent = 'Viendo: Comercial & Film';
+        history.replaceState(null, '', '#comercial');
+      }
+
+      if (shouldScroll) {
+        const target = document.getElementById('archivo');
+        if (lenis) lenis.scrollTo(target, { offset: -40 });
+        else target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // Detectar enlace directo (#comercial o #eventos) al abrir la página
+    const initialHash = window.location.hash.toLowerCase();
+    if (initialHash === '#comercial') {
+      enterUniverse('comercial', false);
+      setTimeout(() => {
+        const target = document.getElementById('archivo');
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      }, 1200);
+    } else if (initialHash === '#eventos' || initialHash === '#bodas') {
+      enterUniverse('eventos', false);
+      setTimeout(() => {
+        const target = document.getElementById('archivo');
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      }, 1200);
+    } else {
+      // Estado inicial neutro: la portada abre oscura y el archivo listo en Eventos sin cambiar aún el fondo hasta que bajen o elijan
+      document.getElementById('panel-eventos').classList.add('active');
+      document.getElementById('tab-eventos').className = 'px-5 py-2 rounded-full mono text-[10px] tracking-[0.22em] uppercase transition bg-[#F2EFE9] text-[#0A0A09]';
+      document.getElementById('tab-comercial').className = 'px-5 py-2 rounded-full mono text-[10px] tracking-[0.22em] uppercase transition opacity-60 hover:opacity-100';
+    }
+
+    // ---------------------------------------------------------
+    // 5. VISOR EDITORIAL DE HISTORIA (CASE STUDY)
+    // ---------------------------------------------------------
+    const storyModal = document.getElementById('story-modal');
+    const storyTitle = document.getElementById('story-title');
+    const storyMeta = document.getElementById('story-meta');
+    const storyDesc = document.getElementById('story-desc');
+    const storyGallery = document.getElementById('story-gallery');
+    const nextStoryBtn = document.getElementById('next-story-btn');
+
+    function openStory(id) {
+      const story = STORIES[id];
+      if (!story) return;
+
+      // Adaptar color del visor al tipo de historia
+      if (story.theme === 'editorial') {
+        storyModal.style.backgroundColor = '#F5F2EB';
+        storyModal.style.color = '#161614';
+      } else {
+        storyModal.style.backgroundColor = '#0A0A09';
+        storyModal.style.color = '#F2EFE9';
+      }
+
+      storyTitle.textContent = story.title;
+      storyMeta.textContent = story.meta;
+      storyDesc.textContent = story.desc;
+
+      // Construir ritmo editorial de revista (1 ancha, luego pares 2 columnas, alternando)
+      storyGallery.innerHTML = '';
+      let i = 0;
+      while (i < story.images.length) {
+        // Foto ancha protagonista (primera y cada 3 fotos)
+        if (i === 0 || i % 3 === 0 || i === story.images.length - 1) {
+          const wrap = document.createElement('div');
+          wrap.className = 'w-full overflow-hidden cursor-zoom-in';
+          wrap.innerHTML = `<img src="${story.images[i]}" alt="${story.title}" loading="lazy" onclick="openZoom('${story.images[i]}')" class="w-full max-h-[82vh] object-cover hover:scale-[1.015] transition duration-700" />`;
+          storyGallery.appendChild(wrap);
+          i++;
+        } else {
+          // Par editorial de 2 columnas
+          const row = document.createElement('div');
+          row.className = 'grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8';
+          const imgA = story.images[i];
+          const imgB = story.images[i + 1];
+          row.innerHTML = `
+            <div class="overflow-hidden cursor-zoom-in">
+              <img src="${imgA}" alt="${story.title}" loading="lazy" onclick="openZoom('${imgA}')" class="w-full h-full max-h-[75vh] object-cover hover:scale-[1.02] transition duration-700" />
+            </div>
+            <div class="overflow-hidden cursor-zoom-in">
+              <img src="${imgB}" alt="${story.title}" loading="lazy" onclick="openZoom('${imgB}')" class="w-full h-full max-h-[75vh] object-cover hover:scale-[1.02] transition duration-700" />
+            </div>
+          `;
+          storyGallery.appendChild(row);
+          i += 2;
+        }
+      }
+
+      const nextStory = STORIES[story.next];
+      nextStoryBtn.textContent = `Siguiente: ${nextStory.title} →`;
+      nextStoryBtn.onclick = () => openStory(story.next);
+
+      storyModal.classList.remove('hidden');
+      storyModal.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+      if (lenis) lenis.stop();
+    }
+
+    function closeStory() {
+      storyModal.classList.add('hidden');
+      document.body.style.overflow = '';
+      if (lenis) lenis.start();
+    }
+
+    // Zoom individual
+    const zoomOverlay = document.getElementById('zoom-overlay');
+    const zoomImg = document.getElementById('zoom-img');
+    function openZoom(src) {
+      zoomImg.src = src;
+      zoomOverlay.classList.remove('hidden');
+      zoomOverlay.classList.add('flex');
+    }
+    function closeZoom() {
+      zoomOverlay.classList.add('hidden');
+      zoomOverlay.classList.remove('flex');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (!zoomOverlay.classList.contains('hidden')) closeZoom();
+        else if (!storyModal.classList.contains('hidden')) closeStory();
+      }
     });
 
-    // 3. Animación al hacer scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    // ---------------------------------------------------------
+    // 6. CURSOR CONTEXTUAL & PREVIEW FLOTANTE EN ÍNDICE
+    // ---------------------------------------------------------
+    const cursor = document.getElementById('custom-cursor');
+    const cursorLabel = document.getElementById('cursor-label');
+    const floatingPreview = document.getElementById('floating-preview');
+    const floatingImg = document.getElementById('floating-preview-img');
 
-    // 4. Lightbox Multifoto
-    const lb = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lightbox-img');
-    const lbCap = document.getElementById('lightbox-caption');
-    const lbCounter = document.getElementById('lightbox-counter');
-    const lbPrev = document.getElementById('lb-prev');
-    const lbNext = document.getElementById('lb-next');
-    let lbImages = [];
-    let lbIndex = 0;
-
-    function updateLbView() {
-      lbImg.src = lbImages[lbIndex];
-      const hasMultiple = lbImages.length > 1;
-      lbPrev.classList.toggle('hidden', !hasMultiple);
-      lbNext.classList.toggle('hidden', !hasMultiple);
-      lbCounter.textContent = hasMultiple ? `${lbIndex + 1} / ${lbImages.length}` : '';
-    }
-
-    function openLightbox(card) {
-      const galleryData = card.dataset.gallery;
-      lbImages = galleryData ? galleryData.split(',').map(s => s.trim()) : [card.querySelector('img').src];
-      lbIndex = 0;
-      lbCap.textContent = card.querySelector('h3').textContent;
-      updateLbView();
-      lb.classList.remove('hidden');
-      lb.classList.add('flex');
-    }
-
-    function changeLbImage(dir) {
-      lbIndex = (lbIndex + dir + lbImages.length) % lbImages.length;
-      updateLbView();
-    }
-
-    function closeLightbox() {
-      lb.classList.add('hidden');
-      lb.classList.remove('flex');
-    }
-
-    document.addEventListener('keydown', e => {
-      if (lb.classList.contains('hidden')) return;
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowRight' && lbImages.length > 1) changeLbImage(1);
-      if (e.key === 'ArrowLeft' && lbImages.length > 1) changeLbImage(-1);
+    window.addEventListener('mousemove', (e) => {
+      if (cursor) {
+        cursor.style.opacity = '1';
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+      }
+      if (floatingPreview && floatingPreview.style.opacity === '1') {
+        floatingPreview.style.left = `${e.clientX + 28}px`;
+        floatingPreview.style.top = `${e.clientY - 140}px`;
+      }
     });
 
-    // 5. Envío del Formulario (FormSubmit AJAX)
+    document.querySelectorAll('[data-cursor]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.remove('w-3', 'h-3', 'mix-blend-difference');
+        cursor.classList.add('w-auto', 'h-9', 'bg-[#F2EFE9]');
+        cursorLabel.textContent = el.dataset.cursor;
+        cursorLabel.style.opacity = '1';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.add('w-3', 'h-3', 'mix-blend-difference');
+        cursor.classList.remove('w-auto', 'h-9');
+        cursorLabel.style.opacity = '0';
+      });
+    });
+
+    document.querySelectorAll('.index-row').forEach(row => {
+      row.addEventListener('mouseenter', () => {
+        floatingImg.src = row.dataset.preview;
+        floatingPreview.style.opacity = '1';
+        floatingPreview.style.transform = 'scale(1)';
+      });
+      row.addEventListener('mouseleave', () => {
+        floatingPreview.style.opacity = '0';
+        floatingPreview.style.transform = 'scale(0.95)';
+      });
+    });
+
+    // ---------------------------------------------------------
+    // 7. ENVÍO DEL FORMULARIO (FORMSUBMIT AJAX -> GMAIL)
+    // ---------------------------------------------------------
     const contactForm = document.getElementById('contact-form');
     const submitBtn = document.getElementById('submit-btn');
     const formStatus = document.getElementById('form-status');
@@ -480,13 +986,13 @@
         if (res.ok) {
           contactForm.reset();
           formStatus.textContent = '¡Solicitud enviada! Te responderé muy pronto.';
-          formStatus.className = 'mono text-[11px] tracking-[0.15em] text-emerald-400';
+          formStatus.style.color = '#10b981';
         } else {
           throw new Error();
         }
       } catch {
         formStatus.textContent = 'Hubo un problema. Escríbeme directo a paolocifuentesphoto@gmail.com';
-        formStatus.className = 'mono text-[11px] tracking-[0.15em] text-red-400';
+        formStatus.style.color = '#ef4444';
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Enviar Solicitud';

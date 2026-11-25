@@ -104,10 +104,6 @@
     }
     .group:hover .img-frame img { transform: scale(1.045); }
 
-    /* Máscara para tipografía cinética */
-    .line-mask { overflow: hidden; display: inline-block; vertical-align: bottom; }
-    .line-inner { display: inline-block; }
-
     /* Transición de Universos */
     .universe-panel { display: none; opacity: 0; }
     .universe-panel.active { display: block; opacity: 1; animation: panelFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
@@ -119,6 +115,12 @@
     /* Ocultar scrollbar en elementos horizontales */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Scroll fluido nativo dentro del Visor de Historias */
+    #story-modal {
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
 
     /* Preloader */
     #preloader {
@@ -176,9 +178,9 @@
   </header>
 
   <!-- =========================================================
-       SECCIÓN 1: HERO PERSONAL (EL OJO DEL AUTOR)
-       Sube tus fotos de viajes a la carpeta VIAJES/ en GitHub:
-       VIAJES/viaje-1.jpg, VIAJES/viaje-2.jpg, VIAJES/viaje-3.jpg
+       SECCIÓN 1: HERO PERSONAL (EL OJO DEL AUTOR + RETRATO)
+       - Retrato circular: sube tu foto como perfil.jpg en la raíz
+       - Fondo viaje: VIAJES/viaje-1.jpg
   ========================================================== -->
   <section id="inicio" class="relative h-screen min-h-[680px] w-full overflow-hidden bg-[#0A0A09] text-[#F2EFE9]">
     <div class="absolute inset-0">
@@ -199,9 +201,26 @@
       </div>
 
       <div class="max-w-5xl">
-        <p class="mono text-[10px] md:text-[11px] tracking-[0.35em] uppercase text-[#C9B99B] mb-5 hero-reveal">
-          Paolo Cifuentes Studio — Archivo &amp; Dirección
-        </p>
+        <!-- Retrato Circular del Autor integrado con la animación -->
+        <div class="flex items-center gap-4 mb-6 hero-reveal">
+          <div class="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border border-white/30 bg-zinc-900 shadow-2xl shrink-0">
+            <img
+              src="perfil.jpg"
+              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=85';"
+              alt="Paolo Cifuentes — Retrato"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div>
+            <p class="mono text-[10px] md:text-[11px] tracking-[0.32em] uppercase text-[#C9B99B]">
+              Paolo Cifuentes Studio
+            </p>
+            <p class="mono text-[9px] tracking-[0.22em] uppercase text-zinc-300/80 mt-1">
+              Archivo &amp; Dirección · Guatemala
+            </p>
+          </div>
+        </div>
+
         <h1 class="serif text-5xl sm:text-7xl md:text-[6.8rem] font-normal leading-[0.93] tracking-tight hero-reveal">
           Persiguiendo luz real,<br />
           <span class="italic text-[#E4DFD5]">sin guiones ni poses.</span>
@@ -613,9 +632,9 @@
   </footer>
 
   <!-- =========================================================
-       VISOR EDITORIAL DE HISTORIA (ESTILO REVISTA / CASE STUDY)
+       VISOR EDITORIAL DE HISTORIA (CON SCROLL NATIVO CORREGIDO)
   ========================================================== -->
-  <div id="story-modal" class="fixed inset-0 z-[100] hidden overflow-y-auto bg-[#0A0A09] text-[#F2EFE9] transition-colors duration-500">
+  <div id="story-modal" data-lenis-prevent class="fixed inset-0 z-[100] hidden overflow-y-auto overscroll-contain bg-[#0A0A09] text-[#F2EFE9] transition-colors duration-500">
     <!-- Barra fija del Visor -->
     <div class="sticky top-0 z-20 px-6 md:px-12 py-5 flex items-center justify-between backdrop-blur-md bg-inherit/85 border-b border-current/10">
       <div class="flex items-center gap-4">
@@ -649,7 +668,7 @@
   </div>
 
   <!-- ZOOM PANTALLA COMPLETA AL HACER CLIC EN UNA FOTO DE LA HISTORIA -->
-  <div id="zoom-overlay" onclick="closeZoom()" class="fixed inset-0 z-[150] hidden bg-black/95 items-center justify-center p-6 backdrop-blur-sm cursor-zoom-out">
+  <div id="zoom-overlay" data-lenis-prevent onclick="closeZoom()" class="fixed inset-0 z-[150] hidden bg-black/95 items-center justify-center p-6 backdrop-blur-sm cursor-zoom-out">
     <img id="zoom-img" src="" alt="" class="max-h-[90vh] max-w-[92vw] object-contain" />
   </div>
 
@@ -772,14 +791,10 @@
       currentUniverse = universe;
       const isEditorial = universe === 'eventos';
 
-      // Cambiar paleta global del sitio
       document.body.classList.toggle('theme-editorial', isEditorial);
-
-      // Mostrar solo el panel seleccionado (Cero mezclas)
       document.getElementById('panel-eventos').classList.toggle('active', isEditorial);
       document.getElementById('panel-comercial').classList.toggle('active', !isEditorial);
 
-      // Actualizar estado de los botones
       const tabEventos = document.getElementById('tab-eventos');
       const tabComercial = document.getElementById('tab-comercial');
       const statusText = document.getElementById('universe-status');
@@ -803,7 +818,6 @@
       }
     }
 
-    // Detectar enlace directo (#comercial o #eventos) al abrir la página
     const initialHash = window.location.hash.toLowerCase();
     if (initialHash === '#comercial') {
       enterUniverse('comercial', false);
@@ -818,7 +832,6 @@
         if (target) target.scrollIntoView({ behavior: 'smooth' });
       }, 1200);
     } else {
-      // Estado inicial neutro: la portada abre oscura y el archivo listo en Eventos sin cambiar aún el fondo hasta que bajen o elijan
       document.getElementById('panel-eventos').classList.add('active');
       document.getElementById('tab-eventos').className = 'px-5 py-2 rounded-full mono text-[10px] tracking-[0.22em] uppercase transition bg-[#F2EFE9] text-[#0A0A09]';
       document.getElementById('tab-comercial').className = 'px-5 py-2 rounded-full mono text-[10px] tracking-[0.22em] uppercase transition opacity-60 hover:opacity-100';
@@ -838,7 +851,6 @@
       const story = STORIES[id];
       if (!story) return;
 
-      // Adaptar color del visor al tipo de historia
       if (story.theme === 'editorial') {
         storyModal.style.backgroundColor = '#F5F2EB';
         storyModal.style.color = '#161614';
@@ -851,11 +863,9 @@
       storyMeta.textContent = story.meta;
       storyDesc.textContent = story.desc;
 
-      // Construir ritmo editorial de revista (1 ancha, luego pares 2 columnas, alternando)
       storyGallery.innerHTML = '';
       let i = 0;
       while (i < story.images.length) {
-        // Foto ancha protagonista (primera y cada 3 fotos)
         if (i === 0 || i % 3 === 0 || i === story.images.length - 1) {
           const wrap = document.createElement('div');
           wrap.className = 'w-full overflow-hidden cursor-zoom-in';
@@ -863,7 +873,6 @@
           storyGallery.appendChild(wrap);
           i++;
         } else {
-          // Par editorial de 2 columnas
           const row = document.createElement('div');
           row.className = 'grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8';
           const imgA = story.images[i];
@@ -887,12 +896,14 @@
 
       storyModal.classList.remove('hidden');
       storyModal.scrollTop = 0;
+      document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
       if (lenis) lenis.stop();
     }
 
     function closeStory() {
       storyModal.classList.add('hidden');
+      document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
       if (lenis) lenis.start();
     }

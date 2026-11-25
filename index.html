@@ -49,7 +49,7 @@
       <a href="#servicios" class="hover:text-white transition">Servicios</a>
       <a href="#contacto" class="hover:text-white transition">Contacto</a>
     </nav>
-    <a href="https://wa.me/50200000000?text=Hola%20Paolo,%20quiero%20consultar%20disponibilidad%20para%20una%20sesi%C3%B3n." target="_blank" class="mono text-[10px] tracking-[0.25em] uppercase border border-white/40 px-4 py-2 hover:bg-white hover:text-black transition">
+    <a href="#contacto" class="mono text-[10px] tracking-[0.25em] uppercase border border-white/40 px-4 py-2 hover:bg-white hover:text-black transition">
       Reservar
     </a>
   </header>
@@ -274,20 +274,71 @@
     </div>
   </section>
 
-  <!-- CONTACTO -->
-  <footer id="contacto" class="border-t border-zinc-900 py-32 px-6 md:px-12 text-center">
+  <!-- CONTACTO & FORMULARIO -->
+  <footer id="contacto" class="border-t border-zinc-900 py-28 px-6 md:px-12">
     <div class="reveal max-w-3xl mx-auto">
-      <p class="mono text-[11px] tracking-[0.35em] uppercase text-zinc-500 mb-6">Disponible en Guatemala &amp; Destino</p>
-      <h2 class="text-5xl md:text-7xl font-light mb-10">Creemos algo <span class="italic">memorable</span></h2>
-      <div class="flex flex-wrap justify-center gap-4 mb-20">
-        <a href="https://wa.me/50200000000?text=Hola%20Paolo,%20vi%20tu%20portafolio%20y%20me%20interesa%20cotizar%20una%20sesi%C3%B3n." target="_blank" class="bg-white text-black px-8 py-3.5 mono text-[11px] tracking-[0.25em] uppercase hover:bg-zinc-200 transition">
-          Cotizar por WhatsApp
-        </a>
-        <a href="https://instagram.com/paolocifuentes.studio" target="_blank" class="border border-zinc-700 px-8 py-3.5 mono text-[11px] tracking-[0.25em] uppercase hover:border-white transition">
-          Instagram
-        </a>
+      <div class="text-center mb-14">
+        <p class="mono text-[11px] tracking-[0.35em] uppercase text-zinc-500 mb-5">Disponible en Guatemala &amp; Destino</p>
+        <h2 class="text-5xl md:text-7xl font-light mb-4">Creemos algo <span class="italic">memorable</span></h2>
+        <p class="text-sm text-zinc-400 font-light">Cuéntame sobre tu evento o proyecto y te responderé personalmente.</p>
       </div>
-      <p class="mono text-[10px] tracking-[0.3em] uppercase text-zinc-600">© 2026 Paolo Cifuentes Studio — Shaping Timeless Visions</p>
+
+      <!-- Formulario de Cotización -->
+      <form id="contact-form" class="space-y-6 text-left">
+        <input type="hidden" name="_subject" value="Nueva consulta desde paolocifuentes.com" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="text" name="_honey" style="display:none" />
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label for="nombre" class="block mono text-[10px] tracking-[0.25em] uppercase text-zinc-500 mb-2">Nombre completo *</label>
+            <input type="text" id="nombre" name="Nombre" required placeholder="Tu nombre" class="w-full bg-transparent border-b border-zinc-800 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white transition" />
+          </div>
+          <div>
+            <label for="contacto-cliente" class="block mono text-[10px] tracking-[0.25em] uppercase text-zinc-500 mb-2">Correo o WhatsApp *</label>
+            <input type="text" id="contacto-cliente" name="Correo_o_WhatsApp" required placeholder="tu@correo.com / +502..." class="w-full bg-transparent border-b border-zinc-800 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white transition" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label for="servicio" class="block mono text-[10px] tracking-[0.25em] uppercase text-zinc-500 mb-2">Tipo de proyecto *</label>
+            <select id="servicio" name="Proyecto" required class="w-full bg-[#070707] border-b border-zinc-800 py-3 text-sm text-white focus:outline-none focus:border-white transition">
+              <option value="Boda / Propuesta">Boda / Propuesta</option>
+              <option value="XV Años">XV Años</option>
+              <option value="Comercial / Marca">Comercial / Marca</option>
+              <option value="Graduación">Graduación</option>
+              <option value="Sesión Personal / Video">Sesión Personal / Video</option>
+            </select>
+          </div>
+          <div>
+            <label for="fecha" class="block mono text-[10px] tracking-[0.25em] uppercase text-zinc-500 mb-2">Fecha estimada (opcional)</label>
+            <input type="text" id="fecha" name="Fecha_Estimada" placeholder="Ej. Noviembre 2026" class="w-full bg-transparent border-b border-zinc-800 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white transition" />
+          </div>
+        </div>
+
+        <div>
+          <label for="mensaje" class="block mono text-[10px] tracking-[0.25em] uppercase text-zinc-500 mb-2">Cuéntame tu idea *</label>
+          <textarea id="mensaje" name="Mensaje" rows="4" required placeholder="Locación, horario aproximado o detalles clave..." class="w-full bg-transparent border-b border-zinc-800 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white transition resize-none"></textarea>
+        </div>
+
+        <div class="pt-4 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <button type="submit" id="submit-btn" class="w-full sm:w-auto bg-white text-black px-10 py-4 mono text-[11px] tracking-[0.25em] uppercase hover:bg-zinc-200 transition">
+            Enviar Solicitud
+          </button>
+          <p id="form-status" class="mono text-[11px] tracking-[0.15em] text-zinc-400 hidden"></p>
+        </div>
+      </form>
+
+      <!-- Enlaces Directos -->
+      <div class="mt-20 pt-10 border-t border-zinc-900 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex flex-wrap justify-center gap-6 mono text-[10px] tracking-[0.25em] uppercase text-zinc-400">
+          <a href="mailto:paolocifuentesphoto@gmail.com" class="hover:text-white transition">paolocifuentesphoto@gmail.com</a>
+          <span class="text-zinc-700">/</span>
+          <a href="https://instagram.com/paolocifuentes.studio" target="_blank" class="hover:text-white transition">Instagram</a>
+        </div>
+        <p class="mono text-[10px] tracking-[0.25em] uppercase text-zinc-600">© 2026 Paolo Cifuentes Studio</p>
+      </div>
     </div>
   </footer>
 
@@ -406,6 +457,41 @@
       if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowRight' && lbImages.length > 1) changeLbImage(1);
       if (e.key === 'ArrowLeft' && lbImages.length > 1) changeLbImage(-1);
+    });
+
+    // 5. Envío del Formulario (FormSubmit AJAX)
+    const contactForm = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const formStatus = document.getElementById('form-status');
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+      formStatus.classList.add('hidden');
+
+      try {
+        const res = await fetch('https://formsubmit.co/ajax/paolocifuentesphoto@gmail.com', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(contactForm)
+        });
+
+        if (res.ok) {
+          contactForm.reset();
+          formStatus.textContent = '¡Solicitud enviada! Te responderé muy pronto.';
+          formStatus.className = 'mono text-[11px] tracking-[0.15em] text-emerald-400';
+        } else {
+          throw new Error();
+        }
+      } catch {
+        formStatus.textContent = 'Hubo un problema. Escríbeme directo a paolocifuentesphoto@gmail.com';
+        formStatus.className = 'mono text-[11px] tracking-[0.15em] text-red-400';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar Solicitud';
+        formStatus.classList.remove('hidden');
+      }
     });
   </script>
 </body>
